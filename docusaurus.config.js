@@ -1,20 +1,17 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
+  title: 'Dassana Enterprise',
+  tagline: 'Cloud Log Lake',
+  url: 'https://dassana.io',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'dassana-io', // Usually your GitHub org/user name.
+  projectName: 'enterprise-docs', // Usually your repo name.
 
   presets: [
     [
@@ -24,13 +21,13 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: 'https://github.com/dassana-io/enterprise-docs/edit/main/docs-root/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/dassana-io/enterprise-docs/edit/main/docs-root/blog/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -42,76 +39,96 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      prism: {
+        theme: require('prism-react-renderer/themes/nightOwl')
+      },
+      colorMode: {
+        defaultMode: 'dark',
+        disableSwitch: true
+      },
+      hideableSidebar: true,
+      // TODO
+      // algolia: {
+      //   apiKey: '55a0aff7668a72fee6d0c38474863f60',
+      //   indexName: 'dassana'
+      // },
       navbar: {
-        title: 'My Site',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: 'Dassana Logo',
+          src: 'img/logo.svg'
         },
         items: [
           {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs'
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
+            className: 'header-github-link',
+            href: 'https://github.com/dassana-io/enterprise-docs',
+            position: 'right'
+          }
+        ]
       },
       footer: {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Resources',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Dassana',
+                to: 'https://oss.dassana.io/'
               },
-            ],
+              {
+                label: 'Context Hub',
+                href: 'https://contexthub.dassana.io/'
+              },
+              {
+                label: 'GitHub',
+                href: 'https://github.com/dassana-io/dassana'
+              }
+            ]
           },
           {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Slack',
+                href: 'https://join.slack.com/t/dassanacommunity/shared_invite/zt-teo6d5ed-xkWDNSaH4m6pC8PAJnrD8g'
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                label: 'GitHub Issues',
+                href: 'https://github.com/dassana-io/dassana/issues/'
+              },
+              {
+                label: 'GitHub Discussions',
+                href: 'https://github.com/dassana-io/dassana/discussions'
+              }
+            ]
+          },
+          {
+            title: 'Other',
+            items: [
+              {
+                label: 'Careers',
+                href: 'https://dassanaio.notion.site/Job-Board-0a01b48e2ef8462bb3d12e50b8b21c9b'
+              },
+              {
+                label: 'LinkedIn',
+                href: 'https://www.linkedin.com/company/dassana-inc'
               },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
-            ],
-          },
+                href: 'https://twitter.com/DassanaSecurity'
+              }
+            ]
+          }
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
+        copyright: `Copyright © ${new Date().getFullYear()} Dassana Inc.`
+      }
     }),
 };
 
