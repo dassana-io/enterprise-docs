@@ -16,7 +16,7 @@ Dassana has a built a Lambda function that streams ALB logs from your S3 bucket 
 [![](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://dassana-native-apps.s3.amazonaws.com/alb-s3/packaged-template.yaml)
 1. Enter a stack name and and fill out the following Parameters:
   - Dassana App ID: Paste the [ALB App ID](https://console.dassana.dev/appStore/app/aws_cloudtrail) from the Dassana App Store
-  - Dassana Endpoint: https://dassana.io/ingest (default)
+  - Dassana Endpoint: https://ingestion.dassana.cloud/logs (default)
   - Dassana Token: Paste your [Dassana Token](https://console.dassana.dev/appStore?page=tokens)
 2. Click the checkboxes to acknowledge custom IAM role creation (a role will be created with permissions to read logs from your S3 bucket) and click Create Stack
 3. Once the stack is created, navigate to the Resources tab and click on the Physical ID of ALBApp. This should open your newly created lambda function.
