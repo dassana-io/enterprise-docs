@@ -13,7 +13,7 @@ Your Cloudtrail logs must be published to an S3 Bucket. Follow [this guide](http
 ## Deploy Serverless App
 Dassana has a built a Lambda function that streams Cloudtrail logs from your S3 bucket to the Cloud Log Lake.
 
-[![](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://dassana-native-apps.s3.amazonaws.com/cloudtrail-s3/packaged-template.yaml)
+[![](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://dassana-native-apps.s3.amazonaws.com/cloudtrail-s3/packaged-template.yaml)
 1. Enter a stack name and and fill out the following Parameters:
   - Dassana App ID: Paste the [Cloudtrail App ID](https://console.dassana.dev/appStore/app/aws_cloudtrail) from the Dassana App Store
   - Dassana Endpoint: https://ingestion.dassana.cloud/logs (default)
