@@ -44,7 +44,7 @@ Fluentd will now tail your Nginx log file, parse the relevant fields, and route 
 <match nginx.access>
   @type http
 
-  endpoint https:ingestion.dassana.cloud/logs
+  endpoint https://ingestion.dassana.cloud/logs
   open_timeout 2
   headers {"x-dassana-app-id":"nginx", "x-dassana-token":"YOUR_TOKEN_HERE"}
   <buffer>
