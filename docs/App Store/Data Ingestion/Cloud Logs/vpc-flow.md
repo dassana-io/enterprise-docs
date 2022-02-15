@@ -1,7 +1,3 @@
----
-sidebar_position: 4
----
-
 # VPC Flow Reference
 
 VPC Flow logs contain information about the IP traffic going to and from network interfaces in your VPC. You can find sample VPC Flow logs and queries in this document.

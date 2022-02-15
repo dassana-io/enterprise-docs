@@ -1,10 +1,6 @@
----
-sidebar_position: 2
----
+# CloudTrail Reference
 
-# Cloudtrail Reference
-
-Cloudtrail logs contain information about actions taken by a user, role, or an AWS service and serve as the primary audit trail for everything in your AWS environment. You can find sample Cloudtrail logs and queries in this document.
+CloudTrail logs contain information about actions taken by a user, role, or an AWS service and serve as the primary audit trail for everything in your AWS environment. You can find sample CloudTrail logs and queries in this document.
 
 ## Log Example
 ```json
@@ -52,4 +48,4 @@ Cloudtrail logs contain information about actions taken by a user, role, or an A
 ```
 
 ## Log Schema 
-View [AWS's Documentation](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-record-contents.html) for all Cloudtrail log fields.
+View [AWS's Documentation](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-record-contents.html) for all CloudTrail log fields.

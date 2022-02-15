@@ -1,7 +1,3 @@
----
-sidebar_position: 2
----
-
 # ALB Access Reference
 
 Application Load Balancer Access logs contain information about requests sent to your load balancer including the client's IP address, latencies, request paths, and server responses. You can find sample ALB Access logs and queries in this document.

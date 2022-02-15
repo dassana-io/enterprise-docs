@@ -22,8 +22,16 @@ const sidebars = {
     'intro',
     {
       type: 'category',
-      label: 'AWS',
-      items: ['Data Ingestion/Cloud Logs/aws', 'Data Ingestion/Cloud Logs/cloudtrail', 'Data Ingestion/Cloud Logs/alb', 'Data Ingestion/Cloud Logs/s3-access', 'Data Ingestion/Cloud Logs/vpc-flow', 'Data Ingestion/Cloud Logs/waf'],
+      label: 'App Store',
+      items: [
+        {
+          type: 'category',
+          label: 'Data Ingestion',
+          items: [
+            'App Store/Data Ingestion/Cloud Logs/aws'
+          ],
+        }
+      ],
     },
   ],
 

@@ -1,7 +1,3 @@
----
-sidebar_position: 3
----
-
 # S3 Access Reference
 
 S3 Access logs contains information on S3 bucket requests useful for security and cost analysis. You can find sample S3 Access logs and queries in this document.

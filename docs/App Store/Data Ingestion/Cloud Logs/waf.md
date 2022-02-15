@@ -1,7 +1,3 @@
----
-sidebar_position: 5
----
-
 # WAF Reference
 
 Web Application Firewall (WAF) Logs contain information about traffic that is analyzed by your web ACLs including details about rules the traffic matched. You can find sample WAF logs and queries in this document.
