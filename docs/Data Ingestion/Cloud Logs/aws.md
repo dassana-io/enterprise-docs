@@ -15,7 +15,7 @@ Dassana has a built a Lambda function that streams logs from your S3 bucket to t
 
 [![](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://dassana-native-apps.s3.amazonaws.com/aws-s3/packaged-template.yaml)
 1. Enter a stack name and and fill out the following Parameters:
-  - Dassana App ID: Paste the appropriate [App ID](alb.md#app-ids)
+  - Dassana App ID: Paste the appropriate [App ID](aws.md#app-ids)
   - Dassana Endpoint: https://ingestion.dassana.cloud/logs
   - Dassana Token: Paste your [Dassana Token](https://console.dassana.dev/appStore?page=tokens)
 2. Click the checkboxes to acknowledge custom IAM role creation (a role will be created with permissions to read logs from your S3 bucket) and click Create Stack
