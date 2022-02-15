@@ -22,7 +22,11 @@ const sidebars = {
     'intro',
     {
       type: 'category',
-      label: 'App Store',
+      label: '📱 App Store',
+      link: {
+        type: 'doc',
+        id: 'App Store/intro',
+      },
       items: [
         {
           type: 'category',
@@ -30,9 +34,23 @@ const sidebars = {
           items: [
             'App Store/Data Ingestion/Cloud Logs/aws'
           ],
-        }
+        },
+        'App Store/limits'
       ],
     },
+    {
+      type: 'category',
+      label: '🔎 Query',
+      link: {
+        type: 'doc',
+        id: 'Query/intro',
+      },
+      items: [
+        'Query/sample-queries',
+        'Query/limits'
+      ]
+    },
+    'support'
   ],
 
 };

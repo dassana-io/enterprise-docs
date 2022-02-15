@@ -21,13 +21,13 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/dassana-io/enterprise-docs/edit/main/docs-root/',
+          editUrl: 'https://github.com/dassana-io/enterprise-docs/edit/main/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           editUrl:
-            'https://github.com/dassana-io/enterprise-docs/edit/main/docs-root/blog/',
+            'https://github.com/dassana-io/enterprise-docs/edit/main/blog/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -64,7 +64,7 @@ const config = {
             position: 'left',
             label: 'Docs'
           },
-          { to: '/blog', label: 'Blog', position: 'left' },
+          // { to: '/blog', label: 'Blog', position: 'left' },
           {
             className: 'header-github-link',
             href: 'https://github.com/dassana-io/enterprise-docs',
