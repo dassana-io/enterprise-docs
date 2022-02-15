@@ -44,7 +44,7 @@ Fluentd will now tail your Apache log file, parse the relevant fields, and route
 <match apache.access>
   @type http
 
-  endpoint https:ingestion.dassana.cloud/logs
+  endpoint https://ingestion.dassana.cloud/logs
   open_timeout 2
   headers {"x-dassana-app-id":"apache", "x-dassana-token":"YOUR_TOKEN_HERE"}
   <buffer>
