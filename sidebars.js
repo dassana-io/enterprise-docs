@@ -25,17 +25,23 @@ const sidebars = {
       label: '📱 App Store',
       link: {
         type: 'doc',
-        id: 'App Store/intro',
+        id: 'app-store/intro',
       },
       items: [
         {
           type: 'category',
-          label: 'Data Ingestion',
+          label: 'Apps',
+          link: {
+            type: 'doc',
+            id: 'app-store/apps/apps',
+          },
           items: [
-            'App Store/Data Ingestion/Cloud Logs/aws'
+            'app-store/apps/cloud-logs/aws/aws',
+            'app-store/apps/custom'
           ],
         },
-        'App Store/limits'
+        'app-store/tokens',
+        'app-store/limits'
       ],
     },
     {
@@ -43,11 +49,11 @@ const sidebars = {
       label: '🔎 Query',
       link: {
         type: 'doc',
-        id: 'Query/intro',
+        id: 'query/intro',
       },
       items: [
-        'Query/sample-queries',
-        'Query/limits'
+        'query/sample-queries',
+        'query/limits'
       ]
     },
     'support'

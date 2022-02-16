@@ -1,20 +1,13 @@
 # AWS
 
-## App Installation
-
-In this guide, we'll learn how to deploy Dassana's AWS app to stream all your AWS logs to Dassana. 
-- [CloudTrail](cloudtrail)
-- [VPC Flow](vpc-flow)
-- [ALB](alb)
-- [S3 Access](s3-access)
-- [WAF](waf)
+In this guide, we'll learn how to stream all your AWS logs - [CloudTrail](cloudtrail), [VPC Flow](vpc-flow), [ALB](alb), [S3 Access](s3-access), [WAF](waf) - to Dassana.
 
 :::note Prerequisite
 Your AWS logs must be published to an S3 Bucket.
 :::
 
 ## Deploy Serverless App
-Dassana has a built a Lambda function that streams logs from your S3 bucket to the Cloud Log Lake. You must deploy this app once for each log type (ex. Cloudtrail, VPC Flow logs, etc.)
+Dassana has built a Lambda function that streams logs from your S3 bucket to the Cloud Log Lake. You must deploy this serverless app once for each log type (ex. Cloudtrail, VPC Flow logs, etc.)
 
 [![](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://dassana-native-apps.s3.amazonaws.com/aws-s3/packaged-template.yaml)
 1. Enter a stack name and and fill out the following Parameters:

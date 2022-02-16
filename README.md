@@ -27,3 +27,5 @@ $ npm run build
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
 ## Using the docs
+
+Each top-level section of the doc corresponds to a service. When you add markdown files, you will need to also configure sidebars.js for your page to show up in the doc navigation.
