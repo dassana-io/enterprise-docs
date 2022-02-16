@@ -56,6 +56,18 @@ const sidebars = {
         'query/limits'
       ]
     },
+    {
+      type: 'category',
+      label: '🌎 Org Manager',
+      link: {
+        type: 'doc',
+        id: 'org-manager/intro',
+      },
+      items: [
+        'org-manager/limits'
+      ]
+    },
+    'billing/intro',
     'support'
   ],
 
