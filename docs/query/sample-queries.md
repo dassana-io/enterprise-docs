@@ -72,7 +72,7 @@ SELECT JSON_VALUE($, '$.eventVersion') FROM aws_cloudtrail
 ```
 
 #### `JSON_EXISTS`
-Will return 1 (true) or 0 (false) if the path exists
+Returns 1 (true) or 0 (false) if the path exists
 
 ```sql
 SELECT JSON_EXISTS($, '$.requestParameters.ipPermissions.items[*].toPort') FROM aws_cloudtrail

@@ -76,23 +76,6 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Resources',
-            items: [
-              {
-                label: 'Dassana',
-                to: 'https://oss.dassana.io/'
-              },
-              {
-                label: 'Context Hub',
-                href: 'https://contexthub.dassana.io/'
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/dassana-io/dassana'
-              }
-            ]
-          },
-          {
             title: 'Community',
             items: [
               {
@@ -100,22 +83,31 @@ const config = {
                 href: 'https://join.slack.com/t/dassanacommunity/shared_invite/zt-teo6d5ed-xkWDNSaH4m6pC8PAJnrD8g'
               },
               {
-                label: 'GitHub Issues',
-                href: 'https://github.com/dassana-io/dassana/issues/'
-              },
-              {
-                label: 'GitHub Discussions',
-                href: 'https://github.com/dassana-io/dassana/discussions'
+                label: 'Careers',
+                href: 'https://dassanaio.notion.site/Job-Board-0a01b48e2ef8462bb3d12e50b8b21c9b'
               }
             ]
           },
           {
-            title: 'Other',
+            title: 'Resources',
             items: [
               {
-                label: 'Careers',
-                href: 'https://dassanaio.notion.site/Job-Board-0a01b48e2ef8462bb3d12e50b8b21c9b'
+                label: 'Dassana Central',
+                href: 'https://dassana.io'
               },
+              {
+                label: 'Terms of Service',
+                href: 'https://www.notion.so/dassanaio/Terms-of-Service-97889d43cf1a44e38554314621fc3ac7'
+              },
+              {
+                label: 'Privacy Policy',
+                href: 'https://www.notion.so/dassanaio/Privacy-Policy-ed4f1a5d498846c0b7a3edb02119a384'
+              }
+            ]
+          },
+          {
+            title: 'Social',
+            items: [
               {
                 label: 'LinkedIn',
                 href: 'https://www.linkedin.com/company/dassana-inc'
