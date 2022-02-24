@@ -53,6 +53,7 @@ const sidebars = {
       },
       items: [
         'query/sample-queries',
+        'query/grammar',
         'query/limits'
       ]
     },
