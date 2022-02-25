@@ -2,11 +2,11 @@
 
 ## Default SQL
 ```sql title="Basic Filter"
-select eventSource from aws_aws_cloudtrail where userIdentity.accessKeyId = 'EXAMPLE_KEY_ID'
+select eventSource from aws_cloudtrail where userIdentity.accessKeyId = 'EXAMPLE_KEY_ID'
 ```
 
 ```sql title="Order By"
-select eventSource, eventName from aws_aws_cloudtrail order by eventName desc
+select eventSource, eventName from aws_cloudtrail order by eventName desc
 ```
 
 ```sql title="Count + In"
