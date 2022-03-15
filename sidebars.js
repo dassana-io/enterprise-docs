@@ -54,7 +54,8 @@ const sidebars = {
       items: [
         'query/sample-queries',
         'query/grammar',
-        'query/limits'
+        'query/limits',
+        'query/functions'
       ]
     },
     {
