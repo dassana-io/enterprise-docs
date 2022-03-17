@@ -1,7 +1,5 @@
 # Functions
 
-List of functions supported in Dassana query -
-
 :::note
 Most of the functions listed below are **case insensitive** except for few explicitly mentioned.
 :::
