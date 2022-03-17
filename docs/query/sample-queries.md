@@ -54,26 +54,3 @@ SELECT requestParameters.groupId
         AND ARRAY ipRanges.items CONTAINS ANY (cidrIp = '0.0.0.0/0')
     )
 ```
-
-### Functions
-
-#### `JSON_QUERY`
-Returns the raw json-path extracted JSON representation, so even a singular value like $.eventVersion will be returned as ["1.08"]
-
-```sql
-SELECT JSON_QUERY($, '$.eventVersion') FROM aws_cloudtrail
-```
-
-#### `JSON_VALUE`
-Returns the parsed value, here $.eventVersion will be returned as 1.08. Note this will only return primitives and not JSON Objects or Arrays.
-
-```sql
-SELECT JSON_VALUE($, '$.eventVersion') FROM aws_cloudtrail
-```
-
-#### `JSON_EXISTS`
-Returns 1 (true) or 0 (false) if the path exists
-
-```sql
-SELECT JSON_EXISTS($, '$.requestParameters.ipPermissions.items[*].toPort') FROM aws_cloudtrail
-```
