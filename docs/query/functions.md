@@ -1,4 +1,4 @@
-# Query Functions
+# Functions
 
 List of functions supported in Dassana query -
 
