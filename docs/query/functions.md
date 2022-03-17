@@ -17,9 +17,9 @@ Only supported for numerical values.
 :::
 
 ```sql
-SELECT AVG(col1) FROM table1 WHERE col2=’random1’;
+SELECT AVG(col1) FROM table1 WHERE col2=’random1’
 
-SELECT AVG(DISTINCT col1) FROM table1 WHERE col2=’random1’;
+SELECT AVG(DISTINCT col1) FROM table1 WHERE col2=’random1’
 ```
 
 ### `sum`
@@ -217,7 +217,7 @@ SELECT to_date_time(col1) FROM table1
 
 SELECT to_date_time('2022/2/20') FROM table1
 
-SELECT to_date_time(1640000000) FROM table1;
+SELECT to_date_time(1640000000) FROM table1
 ```
 
 Output (formatted as `YYYY-MM-DD HH:MM:SS`)
@@ -235,13 +235,13 @@ Converts date and time string to DateTime representation. Accepts UNIX timestamp
 Syntax: `parse_date_time(field/function/string), parse_date_time(field/function/string, timezone_string)`
 
 ```sql
-SELECT parse_date_time('1640000000') FROM table1;
+SELECT parse_date_time('1640000000') FROM table1
 
-SELECT parse_date_time('12/12/2020 12:12:57') FROM table1;
+SELECT parse_date_time('12/12/2020 12:12:57') FROM table1
 
-SELECT parse_date_time('Sat, 18 Aug 2018 07:22:16 GMT') FROM table1;
+SELECT parse_date_time('Sat, 18 Aug 2018 07:22:16 GMT') FROM table1
 
-SELECT parse_date_time('Sat, 18 Aug 2018 07:22:16 GMT', 'Asia/Kolkata') FROM table1;
+SELECT parse_date_time('Sat, 18 Aug 2018 07:22:16 GMT', 'Asia/Kolkata') FROM table1
 ```
 
 Output (formatted as `YYYY-MM-DD HH:MM:SS`) -
@@ -366,9 +366,9 @@ Output: `"[/192.168.0.0, /192.168.255.255]"`
 Checks if an IP address is contained in given network prefix CIDR. Returns 1 if true or 0 otherwise. This function accepts both IPv4 and IPv6 addresses.
 
 ```sql
-SELECT isIPAddressInRange('127.0.0.1', '127.0.0.0/8') FROM table1;
+SELECT isIPAddressInRange('127.0.0.1', '127.0.0.0/8') FROM table1
 
-SELECT isIPAddressInRange('127.12.0.1', '127.0.0.0/24') FROM table1;
+SELECT isIPAddressInRange('127.12.0.1', '127.0.0.0/24') FROM table1
 ```
 
 Output:
@@ -383,7 +383,7 @@ Output:
 Converts string form of IPv6 address to IPv6 type.
 
 ```sql
-SELECT toIPv6('2001:438:ffff::407d:1bc1') FROM table1;
+SELECT toIPv6('2001:438:ffff::407d:1bc1') FROM table1
 ```
 
 Output: `"/2001:438:ffff:0:0:0:407d:1bc1"`
@@ -393,7 +393,7 @@ Output: `"/2001:438:ffff:0:0:0:407d:1bc1"`
 Opposite of `toIPv6`
 
 ```sql
-SELECT IPv6NumToString(toIPv6('2001:438:ffff::407d:1bc1')) FROM table1;
+SELECT IPv6NumToString(toIPv6('2001:438:ffff::407d:1bc1')) FROM table1
 ```
 
 Output: `"2001:438:ffff::407d:1bc1"`
@@ -403,7 +403,7 @@ Output: `"2001:438:ffff::407d:1bc1"`
 Returns two IPv6 containing the lower range and the higher range for given IPv6 address and CIDR value.
 
 ```sql
-SELECT IPv6CIDRToRange(toIPv6('2001:0db8:0000:85a3:0000:0000:ac1f:8001'), 32) FROM table1;
+SELECT IPv6CIDRToRange(toIPv6('2001:0db8:0000:85a3:0000:0000:ac1f:8001'), 32) FROM table1
 ```
 
 Output: `"[/2001:db8:0:0:0:0:0:0, /2001:db8:ffff:ffff:ffff:ffff:ffff:ffff]"`
@@ -416,11 +416,11 @@ Converts Unix timestamp to calender date time.
 Syntax - `FROM_UNIXTIME(field/function/integer), FROM_UNIXTIME(field/function/integer, format_string)`
 
 ```sql
-SELECT FROM_UNIXTIME(1640000000) FROM table1;
+SELECT FROM_UNIXTIME(1640000000) FROM table1
 
-SELECT FROM_UNIXTIME(1640000000, '%Y-%m-%d %R:%S') FROM table1;
+SELECT FROM_UNIXTIME(1640000000, '%Y-%m-%d %R:%S') FROM table1
 
-SELECT FROM_UNIXTIME(1640000000, '%Y-%m-%d') FROM table1;
+SELECT FROM_UNIXTIME(1640000000, '%Y-%m-%d') FROM table1
 ```
 
 Output:
@@ -492,7 +492,7 @@ Extracts hour (0-23) from datetime.
 Syntax: `TO_HOUR(field/function)`
 
 ```sql
-SELECT TO_HOUR(datetime_col) FROM table1;
+SELECT TO_HOUR(datetime_col) FROM table1
 ```
 
 ### `TO_MINUTE`
@@ -502,7 +502,7 @@ Extracts minute (0-59) from datetime.
 Syntax: `TO_MINUTE(field/function)`
 
 ```sql
-SELECT TO_MINUTE(datetime_col) FROM table1;
+SELECT TO_MINUTE(datetime_col) FROM table1
 ```
 
 ### `TO_SECOND`
@@ -524,9 +524,9 @@ Syntax: `DATE_DIFF(’unit’, startdate_field/function, enddate_field/function)
 Supported ‘unit’ values: `second/minute/hour/day/week/month/quarter/year`
 
 ```sql
-SELECT DATE_DIFF('day', startdate, enddate) FROM table1;
+SELECT DATE_DIFF('day', startdate, enddate) FROM table1
 
-SELECT DATE_DIFF('hour', startdatetime, enddatetime, 'Asia/Kolkata') FROM table1;
+SELECT DATE_DIFF('hour', startdatetime, enddatetime, 'Asia/Kolkata') FROM table1
 ```
 
 ### `NOW`
@@ -536,9 +536,9 @@ Returns the current date and time.
 Syntax: `NOW(), NOW(timezone_string)`
 
 ```sql
-SELECT NOW() AS current_datetime FROM table1;
+SELECT NOW() AS current_datetime FROM table1
 
-SELECT NOW('Asia/Kolkata') AS current_datetime_in_ist FROM table1;
+SELECT NOW('Asia/Kolkata') AS current_datetime_in_ist FROM table1
 ```
 
 ## URL Functions
@@ -550,7 +550,7 @@ Extracts the protocol from a URL.
 Syntax: `protocol(field/function/string)`
 
 ```sql
-SELECT protocol('https://console.cloud.google.com/home/dashboard?project=abc') AS protocol FROM table1;
+SELECT protocol('https://console.cloud.google.com/home/dashboard?project=abc') AS protocol FROM table1
 ```
 
 Output: `"https"`
@@ -562,7 +562,7 @@ Extracts the hostname from a URL.
 Syntax: `domain(field/function/string)`
 
 ```sql
-SELECT domain('https://console.cloud.google.com/home/dashboard?project=abc') AS domain FROM table1;
+SELECT domain('https://console.cloud.google.com/home/dashboard?project=abc') AS domain FROM table1
 ```
 
 Output: `"console.cloud.google.com"`
@@ -574,9 +574,9 @@ Returns the port from a URL. Defaults to 0 if no port specified in url.
 Syntax: `port(field/function/string)`
 
 ```sql
-SELECT port('https://console.cloud.google.com/home/dashboard?project=abc') AS port FROM table1;
+SELECT port('https://console.cloud.google.com/home/dashboard?project=abc') AS port FROM table1
 
-SELECT port('https://console.cloud.google.com:8080/home/dashboard?project=abc') AS port FROM table1;
+SELECT port('https://console.cloud.google.com:8080/home/dashboard?project=abc') AS port FROM table1
 ```
 
 Output:
@@ -593,7 +593,7 @@ Returns the path from a URL without query string.
 Syntax: `path(field/function/string)`
 
 ```sql
-SELECT path('https://console.cloud.google.com/home/dashboard?project=abc') AS path FROM table1;
+SELECT path('https://console.cloud.google.com/home/dashboard?project=abc') AS path FROM table1
 ```
 
 Output: `"/home/dashboard"`
@@ -605,7 +605,7 @@ Returns the path from a URL with query string and fragment.
 Syntax: `path_full(field/function/string)`
 
 ```sql
-SELECT path_full('https://console.cloud.google.com/home/dashboard?project=abc') AS path_full FROM table1;
+SELECT path_full('https://console.cloud.google.com/home/dashboard?project=abc') AS path_full FROM table1
 ```
 
 Output: `"/home/dashboard?project=abc"`
@@ -617,7 +617,7 @@ Returns the query string from a URL.
 Syntax: `query_string(field/function/string)`
 
 ```sql
-SELECT query_string('https://console.cloud.google.com/home/dashboard?project=abc') AS query_string FROM table1;
+SELECT query_string('https://console.cloud.google.com/home/dashboard?project=abc') AS query_string FROM table1
 ```
 
 Output: `"project=abc"`
@@ -691,7 +691,7 @@ Translates the size (number of bytes) to human readable rounded size with suffix
 Syntax: `human_readable_size(field/function/integer)`
 
 ```sql
-SELECT human_readable_size(10000) FROM table1;
+SELECT human_readable_size(10000) FROM table1
 ```
 
 Output: `"9.77 KiB"`
@@ -703,7 +703,7 @@ Translates the number to human readable rounded number with suffix (thousand, mi
 Syntax: `human_readable_quantity(field/function/integer)`
 
 ```sql
-SELECT human_readable_quantity(10000) FROM table1;
+SELECT human_readable_quantity(10000) FROM table1
 ```
 
 Output: `"10.00 thousand"`
@@ -715,7 +715,7 @@ Translates the time delta (in seconds) to human readable time with suffix (year,
 Syntax: `human_readable_duration(field/function/integer), human_readable_duration(field/function/integer, maximum_unit)`
 
 ```sql
-SELECT human_readable_quantity(10000) FROM table1;
+SELECT human_readable_quantity(10000) FROM table1
 ```
 
 Output: `"10.00 thousand"`
