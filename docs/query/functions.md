@@ -2,6 +2,8 @@
 
 List of functions supported in Dassana query - 
 
+*Note - Most of the functions listed below are **case insensitive** except for few explicitly mentioned.*
+
 ## Aggregate Functions
 
 - `avg`
@@ -10,14 +12,16 @@ List of functions supported in Dassana query -
     
     It also supports distinct operation.
     
-    *Only supported for numerical column*
+    *Only supported for numerical value*
     
-    Supported syntax - avg(expr), AVG(expr), AVG(DISTINCT expr) 
+    Supported syntax - avg(field/function), avg(DISTINCT field/function) 
     
     Example - 
     
     ```sql
     SELECT AVG(col1) FROM table1 WHERE col2=’random1’;
+    
+    SELECT AVG(DISTINCT col1) FROM table1 WHERE col2=’random1’;
     ```
     
 - `sum`
@@ -26,14 +30,16 @@ List of functions supported in Dassana query -
     
     It also supports distinct operation.
     
-    *Only supported for numerical column*
+    *Only supported for numerical value*
     
-    Supported syntax - sum(expr), SUM(expr), SUM(DISTINCT expr)
+    Supported syntax - sum(field/function), SUM(DISTINCT field/function)
     
     Example - 
     
     ```sql
     SELECT col2, SUM(col1) FROM table1 GROUP BY col2;
+    
+    SELECT col2, SUM(DISTINCT col1) FROM table1 GROUP BY col2;
     ```
     
 - `count`
@@ -42,11 +48,15 @@ List of functions supported in Dassana query -
     
     It also supports distinct operation.
     
-    Supported syntax - count(expr), COUNT(expr), COUNT(DISTINCT expr), COUNT(*)
+    Supported syntax - count(field/function), COUNT(DISTINCT field/function), COUNT(*)
     
     Example - 
     
     ```sql
+    SELECT COUNT(*) FROM table1 WHERE col2=’random1’;
+    
+    SELECT COUNT(col1) FROM table1 WHERE col2=’random1’;
+    
     SELECT COUNT(DISTINCT col1) FROM table1 WHERE col2=’random1’;
     ```
     
@@ -54,7 +64,7 @@ List of functions supported in Dassana query -
     
     Returns the maximum across group of values.
     
-    Supported syntax - max(expr), MAX(expr)
+    Supported syntax - max(field/function)
     
     Example - 
     
@@ -66,7 +76,7 @@ List of functions supported in Dassana query -
     
     Returns the minimum across group of values.
     
-    Supported syntax - min(expr), MIN(expr)
+    Supported syntax - min(field/function), MIN(field/function)
     
     Example - 
     
@@ -81,12 +91,18 @@ List of functions supported in Dassana query -
     
     Resulting array string is sorted in descending order of frequency of values.
     
-    Supported syntax - top10(expr), TOP10(expr)
+    Supported syntax - top10(field/function)
     
     Example - 
     
     ```sql
     SELECT TOP10(role) FROM employee;
+    ```
+    
+    Output - 
+    
+    ```
+    ['role1', 'role2', 'role3',.....]
     ```
     
 
@@ -98,7 +114,7 @@ Only supported for numerical fields
     
     Calculates the absolute value of the number.
     
-    Supported syntax - abs(expr), ABS(expr)
+    Supported syntax - abs(field/function/integer)
     
     Example - 
     
@@ -110,24 +126,24 @@ Only supported for numerical fields
     
     Returns the maximum of 2 values.
     
-    Supported syntax - max2(expr, expr), MAX2(expr, expr)
+    Supported syntax - max2(field/function, field/function/integer)
     
     Example - 
     
     ```sql
-    SELECT MAX2(1, 2) FROM table1;
+    SELECT MAX2(col1, 10) FROM table1;
     ```
     
 - `min2`
     
     Returns the minimum of 2 values.
     
-    Supported syntax - min2(expr, expr), MIN2(expr, expr)
+    Supported syntax - min2(field/function, field/function/integer)
     
     Example - 
     
     ```sql
-    SELECT MIN2(1, 2) FROM table1;
+    SELECT MIN2(col1, 2) FROM table1;
     ```
     
 
@@ -137,12 +153,12 @@ Only supported for numerical fields
     
     Converts input value to string format.
     
-    Supported syntax - to_string(expr), TO_STRING(expr)
+    Supported syntax - to_string(field/function)
     
     Example - 
     
     ```sql
-    SELECT to_string(1) FROM table1;
+    SELECT to_string(col1) FROM table1;
     ```
     
 - `to_int`
@@ -151,12 +167,18 @@ Only supported for numerical fields
     
     Defaults to 0 if conversion fails.
     
-    Supported syntax - to_int(expr), TO_INT(expr)
+    Supported syntax - to_int(field/function/string)
     
     Example - 
     
     ```sql
     SELECT to_int('1') FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    1
     ```
     
 - `to_long`
@@ -165,7 +187,7 @@ Only supported for numerical fields
     
     Defaults to 0 if conversion fails.
     
-    Supported syntax - to_long(expr), TO_LONG(expr)
+    Supported syntax - to_long(field/function/string)
     
     Example - 
     
@@ -173,50 +195,74 @@ Only supported for numerical fields
     SELECT to_long('1') FROM table1;
     ```
     
+    Output - 
+    
+    ```
+    1
+    ```
+    
 - `to_decimal`
     
-    Converts input value to decimal value with 2 decimal place precision.
+    Converts input value to decimal value with precision specified as second parameter
     
-    Defaults to 0.00 if conversion fails.
-    
-    Supported syntax - to_decimal(expr), TO_DECIMAL(expr)
+    Supported syntax - to_decimal(field/function/string, integer)
     
     Example - 
     
     ```sql
-    SELECT to_decimal('1') FROM table1;
+    SELECT to_decimal('1', 2) FROM table1;
+    
+    SELECT to_decimal('1', 5) FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    1.00
+    1.00000
     ```
     
 - `to_date`
     
-    Converts `String/Integer` to calendar date.
+    Converts `String/Integer` to calendar date. Accepts integer value in seconds.
     
     Output format - `YYYY-MM-DD`
     
-    Defaults to `1925-01-01` if conversion fails.
-    
-    Supported syntax - to_date(expr), TO_DATE(expr)
+    Supported syntax - to_date(field/function/string/integer)
     
     Example - 
     
     ```sql
-    SELECT to_date('1640000000') FROM table1;
+    SELECT to_date('2022/2/20') FROM table1;
+    
+    SELECT to_date(1640000000) FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "2022-2-20"
+    "2021-12-20"
     ```
     
 - `to_date_time`
     
-    Converts `String/Integer` to calendar date time.
+    Converts `String/Integer` to calendar date time. Accepts integer value in seconds.
     
     Output format - `YYYY-MM-DD HH:MM:SS`
     
-    Defaults to `1925-01-01 00:00:00` if conversion fails.
-    
-    Supported syntax - to_date_time(expr), TO_DATE_TIME(expr)
+    Supported syntax - to_date_time(field/function/string/integer)
     
     Example - 
     
     ```sql
-    SELECT to_date_time('1640000000') FROM table1;
+    SELECT to_date_time(1640000000) FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "2021-12-20T11:33:20"
     ```
     
 - `parse_date_time`
@@ -225,11 +271,9 @@ Only supported for numerical fields
     
     Output format - `YYYY-MM-DD HH:MM:SS`
     
-    Defaults to `1925-01-01 00:00:00` if conversion fails.
+    Accepts UNIX timestamp, date time in different format, date time with time zone offset.
     
-    Accepts UNIX timestamp, date time in different format, date time with time zone offset
-    
-    Supported syntax - parse_date_time(expr), PARSE_DATE_TIME(expr), parse_date_time(expr, timezone_string), PARSE_DATE_TIME(expr, timezone_string)
+    Supported syntax - parse_date_time(field/function/string), parse_date_time(field/function/string, timezone_string)
     
     Example -
     
@@ -240,7 +284,16 @@ Only supported for numerical fields
     
     SELECT parse_date_time('Sat, 18 Aug 2018 07:22:16 GMT') FROM table1;
     
-    SELECT parse_date_time('Sat, 18 Aug 2018 07:22:16 GMT', 'ASIA/KOLKATA') FROM table1;
+    SELECT parse_date_time('Sat, 18 Aug 2018 07:22:16 GMT', 'Asia/Kolkata') FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "2021-12-20T11:33:20"
+    "2020-12-12T12:12:57"
+    "2018-08-18T07:22:16"
+    "2018-08-18T12:52:16+05:30"
     ```
     
 
@@ -250,58 +303,72 @@ Only supported for numerical fields
     
     Returns 1 for empty input string or 0 for non-empty input string. 
     
-    Supported syntax - empty(s), EMPTY(s)
+    Supported syntax - empty(field/function)
     
 - `not_empty`
     
     Returns 1 for non-empty input string or 0 for empty input string.
     
-    Supported syntax - not_empty(s), NOT_EMPTY(s)
+    Supported syntax - not_empty(field/function)
     
 - `length`
     
     Returns length of the string.
     
-    Supported syntax - length(s), LENGTH(s)
+    Supported syntax - length(field/function)
     
 - `substring`
     
-    Returns a substring starting with the byte from the ‘offset’ index that is ‘length’ bytes long. Character indexing starts from one.
+    Returns a substring starting with the byte from the ‘offset’ index to ‘length’ bytes long. Character indexing starts from one.
     
-    Supported syntax - substring(s, offset, length)
+    Supported syntax - substring(field/function, offset_integer, length_integer)
+    
+    Example - 
+    
+    ```sql
+    SELECT substring('abcdefghijk', 4, 5) FROM table1;
+    ```
+    
+    Output - 
+    
+    ```sql
+    "defgh"
+    ```
     
 - `lower`
     
     Convert string to lowercase.
     
-    Supported syntax - lower(s), LOWER(s)
+    Supported syntax - lower(field/function)
     
 - `upper`
     
     Convert string to uppercase.
     
-    Supported syntax - upper(s), UPPER(s)
+    Supported syntax - upper(field/function)
     
 - `MD5`
     
     Calculates the MD5 from a string and returns the resulting set of bytes. 
     
-    Supported syntax - MD5(s)
+    Supported syntax - MD5(field/function)
     
 - `SHA`
     
     Calculates SHA-1 hash from a string and returns the resulting set of bytes.
     
-    Supported syntax - SHA(s)
+    Supported syntax - SHA(field/function)
     
 - `SHA256`
     
     Calculates SHA-256 hash from a string and returns the resulting set of bytes.
     
-    Supported syntax - SHA256(s)
+    Supported syntax - SHA256(field/function)
     
 
 ## IP Address Functions
+
+These functions are **case-sensitive**.
 
 - `toIPv4`
     
@@ -315,24 +382,24 @@ Only supported for numerical fields
     
     Output - 
     
-    ```sql
-    
+    ```
+    "/171.225.130.45"
     ```
     
 - `IPv4NumToString`
     
-    Converts numeric interpretation of IPv4 address to IPv4 address string of format A.B.C.d
+    Opposite of `toIPv4`
     
     Example - 
     
     ```sql
-    SELECT IPv4NumToString(1234) FROM table1;
+    SELECT IPv4NumToString(to(IPv4('171.225.130.45')) FROM table1;
     ```
     
     Output - 
     
-    ```sql
-    
+    ```
+    "171.225.130.45"
     ```
     
 - `IPv4ToIPv6`
@@ -342,13 +409,13 @@ Only supported for numerical fields
     Example - 
     
     ```sql
-    SELECT IPv6NumToString(IPv4ToIPv6(IPv4StringToNum('192.168.0.1'))) AS addr FROM table1;
+    SELECT IPv6NumToString(IPv4ToIPv6(toIPv4('192.168.0.1'))) AS addr FROM table1;
     ```
     
     Output - 
     
-    ```sql
-    ::ffff:192.168.0.1
+    ```
+    "::ffff:192.168.0.1"
     ```
     
 - `IPv4CIDRToRange`
@@ -363,8 +430,8 @@ Only supported for numerical fields
     
     Output - 
     
-    ```sql
-    ('192.168.0.0','192.168.255.255')
+    ```
+    "[/192.168.0.0, /192.168.255.255]"
     ```
     
 - `isIPAddressInRange`
@@ -377,12 +444,15 @@ Only supported for numerical fields
     
     ```sql
     SELECT isIPAddressInRange('127.0.0.1', '127.0.0.0/8') FROM table1;
+    
+    SELECT isIPAddressInRange('127.12.0.1', '127.0.0.0/24') FROM table1;
     ```
     
     Output - 
     
-    ```sql
+    ```
     1
+    0
     ```
     
 - `toIPv6`
@@ -395,24 +465,24 @@ Only supported for numerical fields
     
     Output - 
     
-    ```sql
-    
+    ```
+    "/2001:438:ffff:0:0:0:407d:1bc1"
     ```
     
 - `IPv6NumToString`
     
-    Converts numeric interpretation of IPv6 address to IPv6 address string of format `::ffff:111.222.33.44`
+    Opposite of `toIPv6`
     
     Example - 
     
     ```sql
-    SELECT IPv6NumToString(1234) FROM table1;
+    SELECT IPv6NumToString(toIPv6('2001:438:ffff::407d:1bc1')) FROM table1;
     ```
     
     Output - 
     
-    ```sql
-    
+    ```
+    "2001:438:ffff::407d:1bc1"
     ```
     
 - `IPv6CIDRToRange`
@@ -428,7 +498,7 @@ Only supported for numerical fields
     Output - 
     
     ```sql
-    ('2001:db8::','2001:db8:ffff:ffff:ffff:ffff:ffff:ffff')
+    "[/2001:db8:0:0:0:0:0:0, /2001:db8:ffff:ffff:ffff:ffff:ffff:ffff]"
     ```
     
 
@@ -438,7 +508,7 @@ Only supported for numerical fields
     
     Converts Unix timestamp to calender date time.
     
-    Supported syntax - FROM_UNIXTIME(timestamp), FROM_UNIXTIME(timestamp, format_string)
+    Supported syntax - FROM_UNIXTIME(field/function/integer), FROM_UNIXTIME(field/function/integer, format_string)
     
     Example - 
     
@@ -446,13 +516,23 @@ Only supported for numerical fields
     SELECT FROM_UNIXTIME(1640000000) FROM table1;
     
     SELECT FROM_UNIXTIME(1640000000, '%Y-%m-%d %R:%S') FROM table1;
+    
+    SELECT FROM_UNIXTIME(1640000000, '%Y-%m-%d') FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "2021-12-20T11:33:20"
+    "2021-12-20 11:33:20"
+    "2021-12-20"
     ```
     
 - `TO_UNIX_TIMESTAMP`
     
     Returns the Unix timestamp either from DateTime or string representation of DateTime
     
-    Supported syntax - TO_UNIX_TIMESTAMP(datetime), TO_UNIX_TIMESTAMP(datetime_string), TO_UNIX_TIMESTAMP(datetime_string, timezone)
+    Supported syntax - TO_UNIX_TIMESTAMP(field/function/string), TO_UNIX_TIMESTAMP(field/function/string, timezone_string)
     
     Example - 
     
@@ -461,26 +541,26 @@ Only supported for numerical fields
     
     SELECT TO_UNIX_TIMESTAMP('2022-03-01 00:00:00') FROM table1;
     
-    SELECT TO_UNIX_TIMESTAMP('2022-03-01 00:00:00', 'ASIA/KOLKATA') FROM table1;
+    SELECT TO_UNIX_TIMESTAMP('2022-03-01 00:00:00', 'Asia/Kolkata') FROM table1;
     ```
     
 - `TO_TIMEZONE`
     
     Converts time or datetime to specified timezone.
     
-    Supported syntax - TO_TIMEZONE(time/datetime, timezone)
+    Supported syntax - TO_TIMEZONE(field/function, timezone_string)
     
     Example - 
     
     ```sql
-    SELECT TO_TIMEZONE(datetime_col, 'ASIA/KOLKATA') FROM table1;
+    SELECT TO_TIMEZONE(datetime_col, 'Asia/Kolkata') FROM table1;
     ```
     
 - `TO_YEAR`
     
     Extracts year from date or datetime.
     
-    Supported syntax - TO_YEAR(datetime)
+    Supported syntax - TO_YEAR(field/function)
     
     Example - 
     
@@ -492,7 +572,7 @@ Only supported for numerical fields
     
     Extracts month of the year (1-12) from date or datetime.
     
-    Supported syntax - TO_MONTH(datetime)
+    Supported syntax - TO_MONTH(field/function)
     
     Example - 
     
@@ -500,23 +580,23 @@ Only supported for numerical fields
     SELECT TO_MONTH(datetime_col) FROM table1;
     ```
     
-- `TO_DATE`
+- `TO_DAY_OF_MONTH`
     
-    Extracts date of the month (1-31) from date or datetime.
+    Extracts day of the month (1-31) from date or datetime.
     
-    Supported syntax - TO_DATE(datetime)
+    Supported syntax - TO_DAY_OF_MONTH(field/function)
     
     Example - 
     
     ```sql
-    SELECT TO_DATE(datetime_col) FROM table1;
+    SELECT TO_DAY_OF_MONTH(datetime_col) FROM table1;
     ```
     
 - `TO_HOUR`
     
     Extracts hour (0-23) from datetime.
     
-    Supported syntax - TO_HOUR(datetime)
+    Supported syntax - TO_HOUR(field/function)
     
     Example - 
     
@@ -528,7 +608,7 @@ Only supported for numerical fields
     
     Extracts minute (0-59) from datetime.
     
-    Supported syntax - TO_MINUTE(datetime)
+    Supported syntax - TO_MINUTE(field/function)
     
     Example - 
     
@@ -540,7 +620,7 @@ Only supported for numerical fields
     
     Extracts hour (0-59) from datetime.
     
-    Supported syntax - TO_SECOND(datetime)
+    Supported syntax - TO_SECOND(field/function)
     
     Example - 
     
@@ -552,7 +632,7 @@ Only supported for numerical fields
     
     Returns the difference between two dates or dates with time values in the unit specified. If start datetime and end datetime in different timezone use additional timezone argument which converts both to datetime to specified timezone before calculating difference.
     
-    Supported Syntax - DATE_DIFF(’unit’, startdate, enddate), DATE_DIFF(’unit’, startdatetime, enddatetime, timezone)
+    Supported Syntax - DATE_DIFF(’unit’, startdate_field/function, enddate_field/function), DATE_DIFF(’unit’, startdatetime_field/function, enddatetime_field/function, timezone)
     
     Possible ‘unit’ values - `second/minute/hour/day/week/month/quarter/year`
     
@@ -561,21 +641,21 @@ Only supported for numerical fields
     ```sql
     SELECT DATE_DIFF('day', startdate, enddate) FROM table1;
     
-    SELECT DATE_DIFF('hour', startdatetime, enddatetime, 'ASIA/KOLKATA') FROM table1;
+    SELECT DATE_DIFF('hour', startdatetime, enddatetime, 'Asia/Kolkata') FROM table1;
     ```
     
 - `NOW`
     
     Returns the current date and time.
     
-    Supported syntax - NOW(), NOW(timezone)
+    Supported syntax - NOW(), NOW(timezone_string)
     
     Example - 
     
     ```sql
     SELECT NOW() AS current_datetime FROM table1;
     
-    SELECT NOW('ASIA/KOLKATA') AS current_datetime_in_ist FROM table1;
+    SELECT NOW('Asia/Kolkata') AS current_datetime_in_ist FROM table1;
     ```
     
 
@@ -585,84 +665,125 @@ Only supported for numerical fields
     
     Extracts the protocol from a URL.
     
-    Supported syntax - protocol(url_string)
+    Supported syntax - protocol(field/function/string)
     
     Example - 
     
     ```sql
-    SELECT protocol(url_col) AS protocol FROM table1;
+    SELECT protocol('https://console.cloud.google.com/home/dashboard?project=abc') AS protocol FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "https"
     ```
     
 - `domain`
     
     Extracts the hostname from a URL.
     
-    Supported syntax - domain(url_string)
+    Supported syntax - domain(field/function/string)
     
     Example - 
     
     ```sql
-    SELECT domain(url_col) AS domain FROM table1;
+    SELECT domain('https://console.cloud.google.com/home/dashboard?project=abc') AS domain FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "console.cloud.google.com",
     ```
     
 - `port`
     
     Returns the port from a URL. Defaults to 0 if no port specified in url.
     
-    Supported syntax - port(url_string)
+    Supported syntax - port(field/function/string)
     
     Example - 
     
     ```sql
-    SELECT port(url_col) AS port FROM table1;
+    SELECT port('https://console.cloud.google.com/home/dashboard?project=abc') AS port FROM table1;
+    
+    SELECT port('https://console.cloud.google.com:8080/home/dashboard?project=abc') AS port FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    0
+    8080
     ```
     
 - `path`
     
     Returns the path from a URL without query string.
     
-    Supported syntax - path(url_string)
+    Supported syntax - path(field/function/string)
     
     Example - 
     
     ```sql
-    SELECT port(url_col) AS path FROM table1;
+    SELECT path('https://console.cloud.google.com/home/dashboard?project=abc') AS path FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "/home/dashboard"
     ```
     
 - `path_full`
     
     Returns the path from a URL with query string and fragment.
     
-    Supported syntax - path_full(url_string)
+    Supported syntax - path_full(field/function/string)
     
     Example - 
     
     ```sql
-    SELECT path_full(url_col) AS path_full FROM table1;
+    SELECT path_full('https://console.cloud.google.com/home/dashboard?project=abc') AS path_full FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "/home/dashboard?project=abc"
     ```
     
 - `query_string`
     
     Returns the query string from a URL.
     
-    Supported syntax - query_string(url_string)
+    Supported syntax - query_string(field/function/string)
     
     Example - 
     
     ```sql
-    SELECT query_string(url_col) AS query_string FROM table1;
+    SELECT query_string('https://console.cloud.google.com/home/dashboard?project=abc') AS query_string FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "project=abc"
     ```
     
 
 ## JSON Functions
 
-$ → it is the special character for complete json object, supported in all JSON function.
+These functions are **case-sensitive**.
+
+$ → it is the special character for complete json object.
 
 - `JSON_EXISTS`
     
     Returns 1 (true) or 0 (false) if the path exists.
     
-    Supported syntax - JSON_EXISTS(json_field, path), JSON_EXISTS($, path_from_root)
+    Supported syntax - JSON_EXISTS(json_field/function, path), JSON_EXISTS($, path_from_root)
     
     Example - 
     
@@ -674,7 +795,7 @@ $ → it is the special character for complete json object, supported in all JSO
     
     Returns the raw json-path extracted JSON representation, so even a singular value like $.eventVersion will be returned as ["1.08"].
     
-    Supported syntax - JSON_QUERY(json_field, path), JSON_QUERY($, path_from_root)
+    Supported syntax - JSON_QUERY(json_field/function, path), JSON_QUERY($, path_from_root)
     
     Example - 
     
@@ -688,7 +809,7 @@ $ → it is the special character for complete json object, supported in all JSO
     
     *Note this will only return primitives and not JSON Objects or Arrays.*
     
-    Supported syntax - JSON_VALUE(json_field, path), JSON_VALUE($, path_from_root)
+    Supported syntax - JSON_VALUE(json_field/function, path), JSON_VALUE($, path_from_root)
     
     Example - 
     
@@ -705,10 +826,71 @@ $ → it is the special character for complete json object, supported in all JSO
     
     *Order of values in aggregated array is indeterminate.* 
     
-    Supported syntax - array_agg()
+    Supported syntax - array_agg(field/function), array_agg(DISTINCT field/column)
     
     Example - 
     
     ```sql
-    SELECT JSON_VALUE($, '$.eventVersion') FROM aws_cloudtrail
+    SELECT array_agg(col1) FROM table1;
+    
+    SELECT array_agg(DISTINCT col1) FROM table1;
+    ```
+    
+
+## Format Functions
+
+- `human_readable_size`
+    
+    Translate the size (number of bytes) to human readable rounded size with suffix (KiB, MiB, etc).
+    
+    Supported syntax - human_readable_size(field/function/integer)
+    
+    Example - 
+    
+    ```sql
+    SELECT human_readable_size(10000) FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "9.77 KiB"
+    ```
+    
+- `human_readable_quantity`
+    
+    Translate the number to human readable rounded number with suffix (thousand, million, billion, etc).
+    
+    Supported syntax - human_readable_quantity(field/function/integer)
+    
+    Example - 
+    
+    ```sql
+    SELECT human_readable_quantity(10000) FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "10.00 thousand"
+    ```
+    
+- `human_readable_duration`
+    
+    Translate the time delta (in seconds) to human readable time with suffix (year, month, day, hour, minute, second).
+    
+    It also accepts optional parameter to define maximum unit to show i.e. seconds, minutes, hours, days, months, years
+    
+    Supported syntax - human_readable_duration(field/function/integer), human_readable_duration(field/function/integer, maximum_unit)
+    
+    Example - 
+    
+    ```sql
+    SELECT human_readable_quantity(10000) FROM table1;
+    ```
+    
+    Output - 
+    
+    ```
+    "10.00 thousand"
     ```
