@@ -71,7 +71,7 @@ curl https://ingestion.dassana.cloud/logs \
 ```
 
 :::info Gotchas
-JSON arrays and gzip encoding is not supported
+JSON arrays and gzip encoding are not supported for `Content-type: application/json`. If you want to send json arrays then use the [nd-json](#nd-json) header.
 :::
 
 ## Aggregators
