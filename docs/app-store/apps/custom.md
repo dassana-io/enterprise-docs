@@ -1,6 +1,6 @@
 # Custom
 
-In this guide, we'll learn how to send your custom logs to Dassana. Currently, Dassana can ingest the following log formats: nd-json, json array, and csv. We've also included instructions for configuring log aggregators such as Fluentd and Vector to stream your logs to Dassana.
+In this guide, we'll learn how to send your custom logs to Dassana. Currently, Dassana can ingest the following log formats: [nd-json](#nd-json), [json array](#json-object), and [csv](#csv). We've also included instructions for configuring log aggregators such as [Fluentd](#fluentd) and [Vector](#vector) to stream your logs to Dassana.
 
 ## Log Types
 
@@ -17,21 +17,26 @@ curl https://ingestion.dassana.cloud/logs \
 {"baz": "qux"}'
 ```
 
-More info on the nd-json format can be found [here](http://ndjson.org). Optionally, you can send compressed data by adding a 'Content-Encoding: gzip' header.
+More info on the nd-json format can be found [here](http://ndjson.org).
 
-### json array
+:::info Additional Headers
+To send gzipped data, add the following headers:
 
 ```bash
-curl https://ingestion.dassana.cloud/logs \
--X POST \
--H 'Content-type: application/json' \
--H 'x-dassana-app-id: YOUR_APP_ID' \
--H 'x-dassana-token: YOUR_DASSANA_TOKEN' \
--H 'x-dassana-data-key: Records' \
---data-binary '{ Records: [{"foo": "bar"}, {"bar": "baz"}, {"baz": "qux"}] }'
+Content-Encoding: gzip
+Accept-Encoding: gzip
 ```
 
-You can send singular json objects by removing the 'x-dassana-data-key' header. Optionally, you can send compressed data by adding a 'Content-Encoding: gzip' header.
+---
+
+```json
+{
+  "Records": [...]
+}
+```
+
+If your events are encapsulated in an object (as seen above), add a `x-dassana-data-key: Records` header so that the array of events can be processed accordingly.
+:::
 
 ### csv
 
@@ -44,7 +49,30 @@ curl https://ingestion.dassana.cloud/logs \
 --data-binary @foo.csv
 ```
 
-Where foo.csv contains logs in the csv format. Optionally, you can send compressed data by adding a 'Content-Encoding: gzip' header.
+:::info gzip
+To send gzipped data, add the following headers:
+
+```bash
+Content-Encoding: gzip
+Accept-Encoding: gzip
+```
+
+:::
+
+### json object
+
+```bash
+curl https://ingestion.dassana.cloud/logs \
+-X POST \
+-H 'Content-type: application/json' \
+-H 'x-dassana-app-id: YOUR_APP_ID' \
+-H 'x-dassana-token: YOUR_DASSANA_TOKEN' \
+--data-binary '{ "foo": "bar" }'
+```
+
+:::info Gotchas
+JSON arrays and gzip encoding is not supported
+:::
 
 ## Aggregators
 
@@ -54,14 +82,14 @@ In this section, we'll configure Fluentd to stream logs to Dassana.
 
 1. Locate your configuration file:
 
-- The default (td-agent) config file path is `/etc/td-agent/td-agent.conf`
-- For calyptia-fluentd the default config file path is `/etc/calyptia-fluentd/calyptia-fluentd.conf`
-- If you installed via Ruby Gem, create the configuration file as follows
-  ```shell
-  sudo fluentd --setup /etc/fluent
-  sudo vi /etc/fluent/fluent.conf
-  ```
-- For a docker container the default config file path is `/fluentd/etc/fluent.conf`
+-   The default (td-agent) config file path is `/etc/td-agent/td-agent.conf`
+-   For calyptia-fluentd the default config file path is `/etc/calyptia-fluentd/calyptia-fluentd.conf`
+-   If you installed via Ruby Gem, create the configuration file as follows
+    ```shell
+    sudo fluentd --setup /etc/fluent
+    sudo vi /etc/fluent/fluent.conf
+    ```
+-   For a docker container the default config file path is `/fluentd/etc/fluent.conf`
 
 2. Edit the configuration file to include your custom log source. We'll use Apache logs for this example.
 
@@ -85,9 +113,10 @@ Fluentd will now tail your custom log file, parse the relevant fields, and route
 
 ```html
 <match apache.access>
-  @type http endpoint https://ingestion.dassana.cloud/logs open_timeout 2
-  headers {"x-dassana-app-id":"REPLACE", "x-dassana-token":"REPLACE"}
-  <buffer> flush_interval 60s </buffer> # Optionally, use chunk_limit_size
+	@type http endpoint https://ingestion.dassana.cloud/logs open_timeout 2
+	headers {"x-dassana-app-id":"YOUR_APP_ID",
+	"x-dassana-token":"YOUR_DASSANA_TOKEN"}
+	<buffer> flush_interval 60s </buffer> # Optionally, use chunk_limit_size
 </match>
 ```
 
@@ -116,8 +145,8 @@ compression = "none"
 encoding.codec = "ndjson"
 [sinks.dassana.request.headers]
 Content-type = application/x-ndjson
-x-dassana-app-id = "REPLACE"
-x-dassana-token = "REPLACE"
+x-dassana-app-id = "YOUR_APP_ID"
+x-dassana-token = "YOUR_DASSANA_TOKEN"
 ```
 
 2. Restart Vector after editing the configuration file. Ex:
