@@ -1,6 +1,6 @@
 # Custom
 
-In this guide, we'll learn how to send your custom logs to Dassana. Currently, Dassana can ingest the following log formats: [nd-json](#nd-json), [json array](#json-object), and [csv](#csv). We've also included instructions for configuring log aggregators such as [Fluentd](#fluentd) and [Vector](#vector) to stream your logs to Dassana.
+In this guide, we'll learn how to send your custom logs to Dassana. Currently, Dassana can ingest the following log formats: [nd-json](#nd-json), [json object](#json-object), and [csv](#csv). We've also included instructions for configuring log aggregators such as [Fluentd](#fluentd) and [Vector](#vector) to stream your logs to Dassana.
 
 ## Log Types
 
