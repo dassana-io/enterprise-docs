@@ -1,6 +1,6 @@
 # Custom
 
-In this guide, we'll learn how to send your custom logs to Dassana. Currently, Dassana can ingest the following log formats: nd-json, json, and csv. We've also included instructions for configuring log aggregators such as Fluentd and Vector to stream your logs to Dassana.
+In this guide, we'll learn how to send your custom logs to Dassana. Currently, Dassana can ingest the following log formats: nd-json, json array, and csv. We've also included instructions for configuring log aggregators such as Fluentd and Vector to stream your logs to Dassana.
 
 ## Log Types
 
@@ -10,18 +10,16 @@ In this guide, we'll learn how to send your custom logs to Dassana. Currently, D
 curl https://ingestion.dassana.cloud/logs \
 -X POST \
 -H 'Content-type: application/x-ndjson' \
--H 'Content-Encoding: gzip' \
 -H 'x-dassana-app-id: YOUR_APP_ID' \
 -H 'x-dassana-token: YOUR_DASSANA_TOKEN' \
--H 'x-dassana-data-key: Records' \
 --data-binary '{"foo": "bar"}
 {"bar": "baz"}
 {"baz": "qux"}'
 ```
 
-More info on nd-json can be found [here](http://ndjson.org). Optionally, you can send compressed data by adding a 'Content-Encoding: gzip' header.
+More info on the nd-json format can be found [here](http://ndjson.org). Optionally, you can send compressed data by adding a 'Content-Encoding: gzip' header.
 
-### json
+### json array
 
 ```bash
 curl https://ingestion.dassana.cloud/logs \
@@ -30,10 +28,10 @@ curl https://ingestion.dassana.cloud/logs \
 -H 'x-dassana-app-id: YOUR_APP_ID' \
 -H 'x-dassana-token: YOUR_DASSANA_TOKEN' \
 -H 'x-dassana-data-key: Records' \
---data-binary '{"foo": "bar", "bar": "baz", "baz": "qux"}'
+--data-binary '{ Records: [{"foo": "bar"}, {"bar": "baz"}, {"baz": "qux"}] }'
 ```
 
-Optionally, you can send compressed data by adding a 'Content-Encoding: gzip' header.
+You can send singular json objects by removing the 'x-dassana-data-key' header. Optionally, you can send compressed data by adding a 'Content-Encoding: gzip' header.
 
 ### csv
 
@@ -43,7 +41,6 @@ curl https://ingestion.dassana.cloud/logs \
 -H 'Content-type: text/csv' \
 -H 'x-dassana-app-id: YOUR_APP_ID' \
 -H 'x-dassana-token: YOUR_DASSANA_TOKEN' \
--H 'x-dassana-data-key: Records' \
 --data-binary @foo.csv
 ```
 
