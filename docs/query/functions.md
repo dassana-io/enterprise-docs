@@ -136,31 +136,31 @@ Syntax: `to_string(field/function)`
 SELECT to_string(col1) FROM table1
 ```
 
-### `to_int`
+### `to_int32`
 
 Converts input value to 32 bit integer value. Defaults to 0 if conversion fails.
 
-Syntax: `to_int(field/function/string)`
+Syntax: `to_int32(field/function/string)`
 
 ```sql
-SELECT to_int(col1) FROM table1
+SELECT to_int32(col1) FROM table1
 
-SELECT to_int('1') FROM table1
+SELECT to_int32('1') FROM table1
 ```
 
 Output: `1`
 
-### `to_long`
+### `to_int64`
 
 Converts input value to 64 bit integer value. Defaults to 0 if conversion fails.
-Supported syntax - to_long(field/function/string)
+Supported syntax - to_int64(field/function/string)
 
-Syntax: `to_long(field/function/string)`
+Syntax: `to_int64(field/function/string)`
 
 ```sql
-SELECT to_long(col1) FROM table1
+SELECT to_int64(col1) FROM table1
 
-SELECT to_long('1') FROM table1
+SELECT to_int64('1') FROM table1
 ```
 
 Output: `1`
@@ -230,7 +230,7 @@ Output (formatted as `YYYY-MM-DD HH:MM:SS`)
 
 ### `parse_date_time`
 
-Converts date and time string to DateTime representation. Accepts UNIX timestamp, date time in different format, date time with time zone offset.
+Converts date and time string to DateTime representation. Accepts UNIX timestamp (in sec/millis), date time in different string format, date time with time zone offset.
 
 Syntax: `parse_date_time(field/function/string), parse_date_time(field/function/string, timezone_string)`
 
