@@ -687,11 +687,7 @@ SELECT JSON_VALUE($, '$.eventVersion') FROM aws_cloudtrail
 
 ### `JSON_LENGTH`
 
-Return the length of a JSON array or a JSON object.
-
-:::note
-Note this will only return primitives and not JSON Objects or Arrays.
-:::
+Returns the length of a JSON array or object.
 
 Syntax: `JSON_LENGTH($, comma separated path)`
 
