@@ -315,6 +315,12 @@ Calculates SHA-256 hash from a string and returns the resulting set of bytes.
 
 Syntax: `SHA256(field/function)`
 
+### `CONCAT`
+
+Concatenates function arguments to single string.
+
+Syntax: `CONACT(field/function/string, ...)`
+
 ## IP Address Functions
 
 :::note
@@ -410,7 +416,8 @@ Output: `"[/2001:db8:0:0:0:0:0:0, /2001:db8:ffff:ffff:ffff:ffff:ffff:ffff]"`
 
 ## Datetime Functions
 
-`FROM_UNIXTIME`
+### `FROM_UNIXTIME`
+
 Converts Unix timestamp to calender date time.
 
 Syntax - `FROM_UNIXTIME(field/function/integer), FROM_UNIXTIME(field/function/integer, format_string)`
@@ -433,9 +440,23 @@ Output:
 
 ### `TO_UNIX_TIMESTAMP`
 
-Returns Unix timestamp either from DateTime or string representation of DateTime.
+Returns Unix timestamp (in second) either from DateTime or string representation of DateTime.
 
 Syntax - `TO_UNIX_TIMESTAMP(field/function/string), TO_UNIX_TIMESTAMP(field/function/string, timezone_string)`
+
+```sql
+SELECT TO_UNIX_TIMESTAMP(datetime_col) FROM table1
+
+SELECT TO_UNIX_TIMESTAMP('2022-03-01 00:00:00') FROM table1
+
+SELECT TO_UNIX_TIMESTAMP('2022-03-01 00:00:00', 'Asia/Kolkata') FROM table1
+```
+
+### `TO_UNIX_TIMESTAMP_MILLIS`
+
+Returns Unix timestamp (in millis) either from DateTime or string representation of DateTime.
+
+Syntax - `TO_UNIX_TIMESTAMP_MILLIS(field/function/string), TO_UNIX_TIMESTAMP_MILLIS(field/function/string, timezone_string)`
 
 ```sql
 SELECT TO_UNIX_TIMESTAMP(datetime_col) FROM table1
@@ -662,6 +683,20 @@ Syntax: `JSON_VALUE(json_field/function, path), JSON_VALUE($, path_from_root)`
 
 ```sql
 SELECT JSON_VALUE($, '$.eventVersion') FROM aws_cloudtrail
+```
+
+### `JSON_LENGTH`
+
+Return the length of a JSON array or a JSON object.
+
+:::note
+Note this will only return primitives and not JSON Objects or Arrays.
+:::
+
+Syntax: `JSON_LENGTH($, comma separated path)`
+
+```sql
+SELECT JSON_LENGTH($, 'requestParameters', 'ipPermissions', 'items') FROM aws_cloudtrail
 ```
 
 ## Array Functions
