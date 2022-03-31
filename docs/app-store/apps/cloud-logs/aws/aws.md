@@ -10,28 +10,29 @@ Your AWS logs must be published to an S3 Bucket.
 
 Dassana has built a Lambda function that streams logs from your S3 bucket to the Cloud Log Lake. You must deploy this serverless app once for each log type (ex. Cloudtrail, VPC Flow logs, etc.)
 
-[![](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://dassana-native-apps.s3.amazonaws.com/aws-s3/packaged-template.yaml)
+[![](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://dassana-native-us-east-1.s3.amazonaws.com/template/packaged-template.yaml)
 
 1. Enter a stack name and and fill out the following Parameters:
 
-- Dassana App ID: Paste the appropriate [App ID](#app-ids)
-- Dassana Endpoint: https://ingestion.dassana.cloud/logs
-- Dassana Token: Paste your [Dassana Token](https://console.dassana.dev/appStore?page=tokens)
+-   Dassana App ID: Paste the appropriate [App ID](#app-ids)
+-   Dassana Endpoint: https://ingestion.dassana.cloud/logs
+-   Dassana Token: Paste your [Dassana Token](https://console.dassana.dev/appStore?page=tokens)
+-   ExistingSNSTopic (Optional): If you already have an existing SNS topic receiving notifications from your S3 bucket, paste the ARN here. Otherwise, leave it blank and we'll create one.
+-   LogSourceBucket: Paste the ARN of the S3 bucket containing your logs
 
-2. Click the checkboxes to acknowledge custom IAM role creation (a role will be created with permissions to read logs from your S3 bucket) and click Create Stack
+2. Click the checkboxes to acknowledge custom IAM role creation and click Create Stack
 3. Once the stack is created, navigate to the Resources tab and click on the Physical ID AWSApp. This should open your newly created lambda function.
 
-## Add S3 Trigger
+## Add S3 Event Notification
 
-You should now be viewing the lambda function you just deployed. If not, you can visit the Lambda console and search for "AWSApp". We will now connect the Lambda function to the S3 bucket containing your logs.
+If you did not have an exisiting SNS topic, follow these steps to finish setting up your Dassana app.
 
-1. In function overview, click Add trigger.
-2. Select S3
-3. Choose the bucket containing your ALB logs, and keep Event type as All Object create events
-4. If you are storing multiple log types in the S3 bucket, fill out the prefix field (not typical)
-5. Acknowledge the Recursive invocation notice and click Add
-
-You should now see your S3 trigger connected to the Lambda function.
+1. Navigate to your S3 bucket in the console and select properties.
+2. Scroll down to Event notifications and click create event notifications
+3. Fill out an event name
+4. Select 'All object create events'
+5. Scroll down and select SQS queue as a destination
+6. Save changes
 
 ## Conclusion
 
