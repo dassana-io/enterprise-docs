@@ -31,8 +31,8 @@ If you did not have an exisiting SNS topic, follow these steps to finish setting
 2. Scroll down to Event notifications and click create event notifications
 3. Fill out an event name
 4. Select 'All object create events'
-5. Scroll down and select SQS queue as a destination
-6. Save changes
+5. Scroll down and select SNS topic as a destination
+6. Select the newly created SNS topic (ends in "-DassanaLogTopic") and Save changes
 
 ## Conclusion
 
