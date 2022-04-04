@@ -136,31 +136,31 @@ Syntax: `to_string(field/function)`
 SELECT to_string(col1) FROM table1
 ```
 
-### `to_int`
+### `to_int32`
 
 Converts input value to 32 bit integer value. Defaults to 0 if conversion fails.
 
-Syntax: `to_int(field/function/string)`
+Syntax: `to_int32(field/function/string)`
 
 ```sql
-SELECT to_int(col1) FROM table1
+SELECT to_int32(col1) FROM table1
 
-SELECT to_int('1') FROM table1
+SELECT to_int32('1') FROM table1
 ```
 
 Output: `1`
 
-### `to_long`
+### `to_int64`
 
 Converts input value to 64 bit integer value. Defaults to 0 if conversion fails.
-Supported syntax - to_long(field/function/string)
+Supported syntax - to_int64(field/function/string)
 
-Syntax: `to_long(field/function/string)`
+Syntax: `to_int64(field/function/string)`
 
 ```sql
-SELECT to_long(col1) FROM table1
+SELECT to_int64(col1) FROM table1
 
-SELECT to_long('1') FROM table1
+SELECT to_int64('1') FROM table1
 ```
 
 Output: `1`
@@ -230,7 +230,7 @@ Output (formatted as `YYYY-MM-DD HH:MM:SS`)
 
 ### `parse_date_time`
 
-Converts date and time string to DateTime representation. Accepts UNIX timestamp, date time in different format, date time with time zone offset.
+Converts date and time string to DateTime representation. Accepts UNIX timestamp (in sec/millis), date time in different string format, date time with time zone offset.
 
 Syntax: `parse_date_time(field/function/string), parse_date_time(field/function/string, timezone_string)`
 
@@ -314,6 +314,12 @@ Syntax: `SHA(field/function)`
 Calculates SHA-256 hash from a string and returns the resulting set of bytes.
 
 Syntax: `SHA256(field/function)`
+
+### `CONCAT`
+
+Concatenates function arguments to single string.
+
+Syntax: `CONACT(field/function/string, ...)`
 
 ## IP Address Functions
 
@@ -410,7 +416,8 @@ Output: `"[/2001:db8:0:0:0:0:0:0, /2001:db8:ffff:ffff:ffff:ffff:ffff:ffff]"`
 
 ## Datetime Functions
 
-`FROM_UNIXTIME`
+### `FROM_UNIXTIME`
+
 Converts Unix timestamp to calender date time.
 
 Syntax - `FROM_UNIXTIME(field/function/integer), FROM_UNIXTIME(field/function/integer, format_string)`
@@ -433,9 +440,23 @@ Output:
 
 ### `TO_UNIX_TIMESTAMP`
 
-Returns Unix timestamp either from DateTime or string representation of DateTime.
+Returns Unix timestamp (in second) either from DateTime or string representation of DateTime.
 
 Syntax - `TO_UNIX_TIMESTAMP(field/function/string), TO_UNIX_TIMESTAMP(field/function/string, timezone_string)`
+
+```sql
+SELECT TO_UNIX_TIMESTAMP(datetime_col) FROM table1
+
+SELECT TO_UNIX_TIMESTAMP('2022-03-01 00:00:00') FROM table1
+
+SELECT TO_UNIX_TIMESTAMP('2022-03-01 00:00:00', 'Asia/Kolkata') FROM table1
+```
+
+### `TO_UNIX_TIMESTAMP_MILLIS`
+
+Returns Unix timestamp (in millis) either from DateTime or string representation of DateTime.
+
+Syntax - `TO_UNIX_TIMESTAMP_MILLIS(field/function/string), TO_UNIX_TIMESTAMP_MILLIS(field/function/string, timezone_string)`
 
 ```sql
 SELECT TO_UNIX_TIMESTAMP(datetime_col) FROM table1
@@ -662,6 +683,16 @@ Syntax: `JSON_VALUE(json_field/function, path), JSON_VALUE($, path_from_root)`
 
 ```sql
 SELECT JSON_VALUE($, '$.eventVersion') FROM aws_cloudtrail
+```
+
+### `JSON_LENGTH`
+
+Returns the length of a JSON array or object.
+
+Syntax: `JSON_LENGTH($, comma separated path)`
+
+```sql
+SELECT JSON_LENGTH($, 'requestParameters', 'ipPermissions', 'items') FROM aws_cloudtrail
 ```
 
 ## Array Functions
