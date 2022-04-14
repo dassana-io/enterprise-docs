@@ -10,28 +10,37 @@ Your AWS logs must be published to an S3 Bucket.
 
 Dassana has built a Lambda function that streams logs from your S3 bucket to the Cloud Log Lake. You must deploy this serverless app once for each log type (ex. Cloudtrail, VPC Flow logs, etc.)
 
-[![](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://dassana-native-apps.s3.amazonaws.com/aws-s3/packaged-template.yaml)
+[![](https://dassana-docs-assets.s3.amazonaws.com/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://dassana-native-us-east-1.s3.amazonaws.com/template/packaged-template.yaml)
 
 1. Enter a stack name and and fill out the following Parameters:
 
-- Dassana App ID: Paste the appropriate [App ID](#app-ids)
-- Dassana Endpoint: https://ingestion.dassana.cloud/logs
-- Dassana Token: Paste your [Dassana Token](https://console.dassana.dev/appStore?page=tokens)
+-   Dassana App ID: Paste the appropriate [App ID](#app-ids)
+-   Dassana Endpoint: https://ingestion.dassana.cloud/logs
+-   Dassana Token: Paste your [Dassana Token](https://console.dassana.dev/appStore?page=tokens)
+-   ExistingSNSTopic (Optional): If you already have an existing SNS topic receiving notifications from your S3 bucket, paste the ARN here. Otherwise, leave it blank and we'll create one.
+-   LogSourceBucket: Paste the ARN of the S3 bucket containing your logs
 
-2. Click the checkboxes to acknowledge custom IAM role creation (a role will be created with permissions to read logs from your S3 bucket) and click Create Stack
+2. Click the checkboxes to acknowledge custom IAM role creation and click Create Stack
 3. Once the stack is created, navigate to the Resources tab and click on the Physical ID AWSApp. This should open your newly created lambda function.
 
-## Add S3 Trigger
+## Add S3 Event Notification
 
-You should now be viewing the lambda function you just deployed. If not, you can visit the Lambda console and search for "AWSApp". We will now connect the Lambda function to the S3 bucket containing your logs.
+If you did not have an exisiting SNS topic, follow these steps to finish setting up your Dassana app.
 
-1. In function overview, click Add trigger.
-2. Select S3
-3. Choose the bucket containing your ALB logs, and keep Event type as All Object create events
-4. If you are storing multiple log types in the S3 bucket, fill out the prefix field (not typical)
-5. Acknowledge the Recursive invocation notice and click Add
+1. Navigate to your S3 bucket in the console and select properties.
+2. Scroll down to Event notifications and click create event notifications
+3. Fill out an event name
+4. Select 'All object create events'
+5. Scroll down and select SNS topic as a destination
+6. Select the newly created SNS topic (ends in "-DassanaLogTopic") and Save changes
 
-You should now see your S3 trigger connected to the Lambda function.
+## What if I have an existing S3 Event Notification?
+
+AWS only allows for 1 event notification per event type per bucket. If your existing S3 Event Notification's destination is SNS, Dassana will hook into your existing notification (assuming you provided the SNS arn when deploying our CFT). However, if your existing event notification's destination is a lambda function, we recommend moving to a fan-out model. Remove your existing event notification and follow the steps above to add Dassana's SNS topic as a destination. Then, you can optionally create a new SQS queue subscribed to Dassana's SNS topic to serve as your lambda's trigger.
+
+import SlackSupport from '../../../../shared/slack-support.md'
+
+<SlackSupport />
 
 ## Conclusion
 
@@ -39,12 +48,12 @@ Congrats! You've successfully deployed the Dassana AWS app. Now, your AWS logs w
 
 ## App IDs
 
-| Log Type                 | App ID               |
-| ------------------------ | -------------------- |
-| [CloudTrail](cloudtrail) | aws_cloudtrail       |
-| [VPC Flow](vpc-flow)     | aws_vpc_flow         |
-| [ALB Access](alb)        | aws_alb              |
-| [S3 Access](s3-access)   | aws_waf              |
-| [WAF](waf)               | aws_s3_access        |
-| Route53 Resolver         | aws_route53_resolver |
-| Network Firewall         | aws_network_firewall |
+| Log Type                        | App ID               |
+| ------------------------------- | -------------------- |
+| [CloudTrail](cloudtrail)        | aws_cloudtrail       |
+| [VPC Flow](vpc-flow)            | aws_vpc_flow         |
+| [ALB Access](alb)               | aws_alb              |
+| [S3 Access](s3-access)          | aws_waf              |
+| [WAF](waf)                      | aws_s3_access        |
+| [Route53 Resolver](r53resolver) | aws_route53_resolver |
+| [Network Firewall](nfw)         | aws_network_firewall |

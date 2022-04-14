@@ -39,9 +39,10 @@ If your events are encapsulated in an object (as seen above), add a `x-dassana-d
 :::
 
 ### csv
+Replace the headers in the URL with your CSV headers.
 
 ```bash
-curl https://ingestion.dassana.cloud/logs \
+curl https://ingestion.dassana.cloud/logs?withHeader=false&csvHeader=header1,header2,header3 \
 -X POST \
 -H 'Content-type: text/csv' \
 -H 'x-dassana-app-id: YOUR_APP_ID' \
@@ -91,32 +92,52 @@ In this section, we'll configure Fluentd to stream logs to Dassana.
     ```
 -   For a docker container the default config file path is `/fluentd/etc/fluent.conf`
 
-2. Edit the configuration file to include your custom log source. We'll use Apache logs for this example.
+2. Edit your source in the configuration file as follows.
 
+Add the following keys to your source
 ```html
 <source>
-  @type tail
-  path /var/log/apache2/access.log # Path to your custom logs
-  pos_file /var/log/td-agent/apache-access.log.pos # This file will be created to keep track of the file's inode and position in the file
-  tag apache.access # Can be anything you like, reference this name in the output (discussed below)
+  ...
   time_key time # This must match the name of the time key extracted in Dassana's app setup
   time_format %Y-%m-%dT%H:%M:%S # This must match the time format selected in Dassana's app setup
-  <parse>
-  @type apache2 # Dependant on your custom log type
-  </parse>
+  ...
 </source>
 ```
 
-Fluentd will now tail your custom log file, parse the relevant fields, and route logs as they're added to the output – which we will now configure.
-
-3. Edit the configuration file to include the following output with your Dassana token. Ensure the match pattern equals the tag you set in the source.
+3. Add the following output with your Dassana token and App Id to your configuration file. Ensure the match pattern equals the tag you set in the source.
 
 ```html
-<match apache.access>
-	@type http endpoint https://ingestion.dassana.cloud/logs open_timeout 2
-	headers {"x-dassana-app-id":"YOUR_APP_ID",
-	"x-dassana-token":"YOUR_DASSANA_TOKEN"}
-	<buffer> flush_interval 60s </buffer> # Optionally, use chunk_limit_size
+<match your_input>
+  @type http
+  endpoint https://ingestion.dassana.cloud/logs
+  headers {"x-dassana-app-id":"YOUR_APP_ID", "x-dassana-token":"YOUR_TOKEN", "Content-type":"application/x-ndjson"}
+  bulk_request true
+  <buffer>
+    @type memory
+    chunk_limit_size 5MB
+    flush_interval 1s
+    retry_max_times 5
+    retry_type periodic
+    retry_wait 2
+  </buffer>
+</match>
+```
+
+Alternatively, if you are ingesting csv logs, include the following output. Modify the csvHeader parameter in the uri to include your csv headers.
+
+```html
+<match your_input>
+  @type http
+  endpoint https://ingestion.dassana.cloud/logs?withHeader=false&csvHeader=time,duration,SrcDevice,DstDevice,Protocol,SrcPort,DstPort,SrcPackets,DstPackets,SrcBytes,SrcBytes
+  headers {"x-dassana-app-id":"YOUR_APP_ID", "x-dassana-token":"YOUR_TOKEN", "Content-type":"text/csv"}
+  <buffer>
+    @type memory
+    chunk_limit_size 5MB
+    flush_interval 1s
+    retry_max_times 5
+    retry_type periodic
+    retry_wait 2
+  </buffer>
 </match>
 ```
 
@@ -130,7 +151,7 @@ sudo systemctl restart td-agent
 
 In this section, we'll configure Vector to stream logs to Dassana.
 
-1. Edit your vector.toml config file to include the following sink
+1. Edit your vector.toml config file to include the following sink if you are ingesting json logs
 
 ```yaml
 #####             #####
@@ -139,12 +160,35 @@ In this section, we'll configure Vector to stream logs to Dassana.
 
 [sinks.dassana]
 type = "http"
-inputs = [ "YOUR_INPUT" ]
+inputs = [ "YOUR_SOURCE_NAME" ]
 uri = "https://ingestion.dassana.cloud/logs"
-compression = "none"
-encoding.codec = "ndjson"
+compression = "gzip"
+encoding.codec = "ndjson" 
+batch.max_bytes = 100000
 [sinks.dassana.request.headers]
-Content-type = application/x-ndjson
+Content-type = "application/x-ndjson"
+Content-Encoding = "gzip"
+x-dassana-app-id = "YOUR_APP_ID"
+x-dassana-token = "YOUR_DASSANA_TOKEN"
+```
+
+Alternatively, if you are ingesting csv logs, include the following sink. Modify the csvHeader parameter in the uri to include your csv headers.
+
+```yaml
+#####             #####
+## Your source here  ##
+#####             #####
+
+[sinks.dassana]
+type = "http"
+inputs = [ "YOUR_SOURCE_NAME" ]
+uri = "https://ingestion.dassana.cloud/logs?withHeader=false&csvHeader=time,duration,SrcDevice,DstDevice,Protocol,SrcPort,DstPort,SrcPackets,DstPackets,SrcBytes,SrcBytes"
+compression = "gzip"
+encoding.codec = "text"
+batch.max_bytes = 100000
+[sinks.dassana.request.headers]
+Content-type = "text/csv"
+Content-Encoding = "gzip"
 x-dassana-app-id = "YOUR_APP_ID"
 x-dassana-token = "YOUR_DASSANA_TOKEN"
 ```
