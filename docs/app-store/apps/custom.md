@@ -39,10 +39,38 @@ If your events are encapsulated in an object (as seen above), add a `x-dassana-d
 :::
 
 ### csv
-Replace the headers in the URL with your CSV headers.
+There are two CSV data types we support: data with headers and without. For example:
+
+```csv
+time,duration,SrcDevice,DstDevice,Protocol,SrcPort,DstPort,SrcPackets,DstPackets,SrcBytes,SrcBytes
+761,4434,Comp132598,Comp817788,6,Port12597,22,89159,85257,15495068,69768940
+764,13161,Comp178973,Comp164069,17,137,137,325,0,30462,0
+765,14369,Comp492856,Mail,6,Port30344,443,227,214,32300,9844
+765,14431,Comp782574,Mail,6,Port28068,443,1637,3313,75302,1220077
+```
+The above data contains headers on the first line. If your CSV data is of this type, ingest the data as follows:
 
 ```bash
-curl https://ingestion.dassana.cloud/logs?withHeader=false&csvHeader=header1,header2,header3 \
+curl https://ingestion.dassana.cloud/logs?withHeader=true \
+-X POST \
+-H 'Content-type: text/csv' \
+-H 'x-dassana-app-id: YOUR_APP_ID' \
+-H 'x-dassana-token: YOUR_DASSANA_TOKEN' \
+--data-binary @foo.csv
+```
+
+If your data does not contain headers, for example:
+```csv
+761,4434,Comp132598,Comp817788,6,Port12597,22,89159,85257,15495068,69768940
+764,13161,Comp178973,Comp164069,17,137,137,325,0,30462,0
+765,14369,Comp492856,Mail,6,Port30344,443,227,214,32300,9844
+765,14431,Comp782574,Mail,6,Port28068,443,1637,3313,75302,1220077
+```
+
+Explicity include the headers in the csvHeader parameter to ingest as follows:
+
+```bash
+curl https://ingestion.dassana.cloud/logs?withHeader=false&csvHeader=time,duration,SrcDevice,DstDevice,Protocol,SrcPort,DstPort,SrcPackets,DstPackets,SrcBytes,SrcBytes \
 -X POST \
 -H 'Content-type: text/csv' \
 -H 'x-dassana-app-id: YOUR_APP_ID' \
@@ -123,12 +151,12 @@ Add the following keys to your source
 </match>
 ```
 
-Alternatively, if you are ingesting csv logs, include the following output. Modify the csvHeader parameter in the uri to include your csv headers.
+Alternatively, if you are ingesting csv logs, include the following output. If your data does not include headers, set the withHeader parameter in the endpoint to be false, and add a csvHeader parameter to equal your headers as comma-seperated values. You can find an example of this in the CSV ingestion section above.
 
 ```html
 <match your_input>
   @type http
-  endpoint https://ingestion.dassana.cloud/logs?withHeader=false&csvHeader=time,duration,SrcDevice,DstDevice,Protocol,SrcPort,DstPort,SrcPackets,DstPackets,SrcBytes,SrcBytes
+  endpoint https://ingestion.dassana.cloud/logs?withHeader=true
   headers {"x-dassana-app-id":"YOUR_APP_ID", "x-dassana-token":"YOUR_TOKEN", "Content-type":"text/csv"}
   <buffer>
     @type memory
@@ -172,7 +200,7 @@ x-dassana-app-id = "YOUR_APP_ID"
 x-dassana-token = "YOUR_DASSANA_TOKEN"
 ```
 
-Alternatively, if you are ingesting csv logs, include the following sink. Modify the csvHeader parameter in the uri to include your csv headers.
+Alternatively, if you are ingesting csv logs, include the following sink. If your data does not include headers, set the withHeader parameter in the endpoint to be false, and add a csvHeader parameter to equal your headers as comma-seperated values. You can find an example of this in the CSV ingestion section above.
 
 ```yaml
 #####             #####
@@ -182,7 +210,7 @@ Alternatively, if you are ingesting csv logs, include the following sink. Modify
 [sinks.dassana]
 type = "http"
 inputs = [ "YOUR_SOURCE_NAME" ]
-uri = "https://ingestion.dassana.cloud/logs?withHeader=false&csvHeader=time,duration,SrcDevice,DstDevice,Protocol,SrcPort,DstPort,SrcPackets,DstPackets,SrcBytes,SrcBytes"
+uri = "https://ingestion.dassana.cloud/logs?withHeader=true"
 compression = "gzip"
 encoding.codec = "text"
 batch.max_bytes = 100000
