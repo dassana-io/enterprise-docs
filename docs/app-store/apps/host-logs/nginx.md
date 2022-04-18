@@ -55,7 +55,7 @@ sudo systemctl restart td-agent
 ```
 
 ## Conclusion
-Congrats! You've successfully setup Fluentd to forward your Nginx logs to Dassana. Now, your logs will be streamed to the Dassana Cloud Log lake and become instantly queryable. Visit [this page](https://docs.dassana.io) next to discover useful queries for Nginx logs.
+Congrats! You've successfully setup Fluentd to forward your Nginx logs to Dassana. Now, your logs will be streamed to the Dassana Cloud Log lake and become instantly queryable. Visit [this page](https://docs.dassana.cloud) next to discover useful queries for Nginx logs.
 
 ## Log Example
 ```json

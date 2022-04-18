@@ -16,9 +16,8 @@ const config = {
 		{
 			src: 'https://plausible.io/js/plausible.outbound-links.js',
 			async: true,
-			defer: true
-			// TODO - uncomment
-			// 'data-domain': 'docs.dassana.io'
+			defer: true,
+			'data-domain': 'docs.dassana.cloud'
 		}
 	],
 	presets: [
@@ -101,7 +100,7 @@ const config = {
 						title: 'Resources',
 						items: [
 							{
-								label: 'Dassana Central',
+								label: 'Homepage',
 								href: 'https://dassana.io'
 							},
 							{
