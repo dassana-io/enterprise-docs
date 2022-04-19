@@ -72,7 +72,7 @@ const config = {
 						position: 'left',
 						label: 'Docs'
 					},
-					// { to: '/blog', label: 'Blog', position: 'left' },
+					{ to: '/blog', label: 'Blog', position: 'left' },
 					{
 						className: 'header-github-link',
 						href: 'https://github.com/dassana-io/enterprise-docs',

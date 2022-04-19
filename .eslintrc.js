@@ -11,7 +11,7 @@ module.exports = {
 		module: true,
 		window: true
 	},
-	ignorePatterns: ['src/api/*/', 'sidebars.js'],
+	ignorePatterns: ['src/api/*/', 'sidebars.js', 'docusaurus.config.js'],
 	parser: '@typescript-eslint/parser', // Specifies the ESLint parser
 	parserOptions: {
 		ecmaFeatures: {
