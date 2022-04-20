@@ -55,11 +55,11 @@ const config = {
 				disableSwitch: true
 			},
 			hideableSidebar: true,
-			// TODO
-			// algolia: {
-			//   apiKey: '55a0aff7668a72fee6d0c38474863f60',
-			//   indexName: 'dassana'
-			// },
+			algolia: {
+			  apiKey: '16f52954ae407661dcd6059176bdd586',
+			  appId: 'ZD52C0K7ZY',
+			  indexName: 'enterprise_docs'
+			},
 			navbar: {
 				logo: {
 					alt: 'Dassana Logo',
