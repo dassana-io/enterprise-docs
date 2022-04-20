@@ -5,7 +5,7 @@
 const config = {
 	title: 'Dassana Enterprise',
 	tagline: 'Cloud Log Lake',
-	url: 'https://dassana.io',
+	url: 'https://docs.dassana.cloud',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
 	onBrokenMarkdownLinks: 'warn',

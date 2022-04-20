@@ -1,8 +1,5 @@
 {
     "index_name": "enterprise_docs",
-    "start_urls": [
-      "https://docs.dassana.cloud/"
-    ],
     "sitemap_urls": [
       "https://docs.dassana.cloud/sitemap.xml"
     ],
