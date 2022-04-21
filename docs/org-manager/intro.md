@@ -1,5 +1,5 @@
 # 🌎 Org Manager
 
-![Org Example](/img/org-manager/org-example.png)
+The org manager is where you can invite, remove, and view users in your Dassana organization. 
 
-![Org Legend](/img/org-manager/org-legend.png)
+![Org Example](/img/org-manager/org-example.png)
