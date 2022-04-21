@@ -230,7 +230,7 @@ where JSON_VALUE($,'$.requestParameters.ipPermissions.items[*].ipRanges.items[*]
 ```
 
 ## Filter Array All
-In the following example, we are looking for data that contains an array at the specified path, in which the specified operator returns true when applied to each element of the array.
+In the following examples, we are looking for data that contains an array at the specified path, in which the specified operator returns true when applied to each element of the array.
 ```json title="Data Primitive"
 {
     "user": "Bob",
