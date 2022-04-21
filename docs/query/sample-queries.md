@@ -231,7 +231,7 @@ where JSON_VALUE($,'$.requestParameters.ipPermissions.items[*].ipRanges.items[*]
 
 ## Filter Array All
 In the following example, we are looking for data that contains an array at the specified path, in which the specified operator returns true when applied to each element of the array.
-```json title="Data"
+```json title="Data Primitive"
 {
     "user": "Bob",
     "abc": {
@@ -246,13 +246,40 @@ In the following example, we are looking for data that contains an array at the 
 }
 ```
 
-```sql title="Query"
+```sql title="Query Primitive"
 select user
 from test_data
-where ARRAY abc.items CONTAINS ALL < 3
+where array abc.items contains all < 3
 ```
 
-```csv title="Result"
+```csv title="Result Primitive"
+| Time | user |
+|------|------|
+| ...  | Bob  |
+```
+
+```json title="Data Object"
+{
+    "user": "Bob",
+    "abc": {
+        "items": [{"foo": 4}, {"foo": 5}]
+    }
+}
+{
+    "user": "Alice",
+    "abc": {
+        "items": [{"foo": 2}, {"bar": 3}]
+    }
+}
+```
+
+```sql title="Query Object"
+select user
+from test_data
+where array abc.items contains all (foo > 3)
+```
+
+```csv title="Result Object"
 | Time | user |
 |------|------|
 | ...  | Bob  |
@@ -279,7 +306,7 @@ In the following examples, we are looking for data that contains an array at the
 ```sql title="Query"
 select user
 from test_data
-where ARRAY abc.items = ARRAY[2, 3, 4]
+where array abc.items = [2, 3, 4]
 ```
 
 ```csv title="Result"
@@ -291,7 +318,7 @@ where ARRAY abc.items = ARRAY[2, 3, 4]
 ## Filter Array Any
 
 In the following examples, we are looking for data that contains an array at the specified path equivalent to the array specified in the query.
-```json title="Data"
+```json title="Data Primitive"
 {
     "user": "Bob",
     "abc": {
@@ -306,13 +333,41 @@ In the following examples, we are looking for data that contains an array at the
 }
 ```
 
-```sql title="Query"
+```sql title="Query Primitive"
 select user
 from test_data
-where ARRAY abc.items CONTAINS ANY < 2
+where array abc.items contains any < 2
 ```
 
-```csv title="Result"
+```csv title="Result Primitive"
+| Time | user   |
+|------|--------|
+| ...  | Bob    |
+| ...  | Alice  |
+```
+
+```json title="Data Object"
+{
+    "user": "Bob",
+    "abc": {
+        "items": [{"foo": 2}, {"bar": 3}]
+    }
+}
+{
+    "user": "Alice",
+    "abc": {
+        "items": [{"foo": 2}, {"bar": 3}]
+    }
+}
+```
+
+```sql title="Query Object"
+select user
+from test_data
+where array abc.items contains any (foo > 2)
+```
+
+```csv title="Result Object"
 | Time | user   |
 |------|--------|
 | ...  | Bob    |
@@ -384,11 +439,11 @@ where ARRAY abc.items CONTAINS ANY < 2
 ```
 
 ```sql title="Query"
-SELECT requestParameters.groupId as sg
-FROM aws_cloudtrail
-WHERE ARRAY requestParameters.ipPermissions.items CONTAINS NONE (
+select requestParameters.groupId as sg
+from aws_cloudtrail
+where array requestParameters.ipPermissions.items contains none (
     toPort = 8080
-    AND ARRAY ipRanges.items CONTAINS ANY (cidrIp = '0.0.0.0/0')
+    and array ipRanges.items contains any (cidrIp = '0.0.0.0/0')
 )
 ```
 
