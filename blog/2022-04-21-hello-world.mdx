@@ -1,22 +1,21 @@
 ---
-slug: hello-world
-title: Hello World
+slug: dassana-intro
+title: Introducting industry's first Cloud Log Lake. 
 authors: [g]
-tags: []
+tags: [announcement]
 ---
 
-Blog posts support [Docusaurus Markdown features](https://docusaurus.io/docs/markdown-features), such as [MDX](https://mdxjs.com/).
-
 <!--truncate-->
+Hello, world! 
+We are super excited to launch Dassana Log Lake today. Built from the ground up, we are solving some of the fundamental problems:
 
-:::tip
+**Cost**.  Every single company, no matter how big or small, suffers from the high cost of logging. There have been attempts at solving this problem but none of them have been successful- you either end up self-hosting some open source solution that is quite painful to operate or you use some commercial solution that requires complex index management etc. 
 
-Use the power of React to create interactive blog posts.
+Dassana solves this problem by separating compute with storage and this shows in our pricing model too. You pay separately for ingestion and querying. On average, Dassana is 10x cheaper than competing solutions. 
 
-```js
-<button onClick={() => alert('button clicked!')}>Click me!</button>
-```
+**Performance**. Dassana is blazing fast thanks to the columnar technology we use. Compared to some of the popular commercial solutions, Dassana is up to 100x faster and requires absolutely no configuration of the index, fields to query, facets, etc. Just send data and start querying it. There is zero latency between ingestion and query. You can query any field and even perform aggregate queries. Oh, did we mention that we support joining data among multiple sources? 
 
-<button onClick={() => alert('button clicked!')}>Click me!</button>
+**Ease of use.** You use SQL to query logs in Dassana. No more spending time learning some arcane proprietary language.  We call it SLQ (Structured Log Query).  Pronounced Slick :) 
+Think about it- your logs are structured so why not your query language? 
 
-:::
+Give it a try, you won’t regret it. https://console.dassana.cloud/. No sign-up required, everyone gets $100 free credits. 
