@@ -56,9 +56,9 @@ const config = {
 			},
 			hideableSidebar: true,
 			algolia: {
-			  apiKey: '7a04ac1ad60f7d23652f103dfa068b38',
-			  appId: 'X1KZ141UWG',
-			  indexName: 'netlify_58759898-355e-4a47-9e80-c65bf5037b16_main_all'
+			  apiKey: '16f52954ae407661dcd6059176bdd586',
+			  appId: 'ZD52C0K7ZY',
+			  indexName: 'enterprise_docs'
 			},
 			navbar: {
 				logo: {
