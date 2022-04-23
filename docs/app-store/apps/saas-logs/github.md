@@ -12,8 +12,6 @@ On the left-hand menu, click 'Webhooks' under the Code, planning, and automation
 - Content type: `application/json`
 - Secret: `You can leave this blank` (We use your token in the URL to authenticate you)
 
-We recommend you select 'Send me everything' for the events you want to trigger the webhook. Ensure 'Active' is checked below, and click 'Add webhook'.
-
 ## What if I don't have permissions for my organization?
 
 You can configure Dassana at a repository-level by navigating to your repository's settings and following the steps above. However, we recommend you configure Dassana at the org-level for GitHub to avoid configuring Dassana manually for new repositories and to capture org-level events such as member invites & adds.
