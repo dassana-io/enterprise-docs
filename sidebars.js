@@ -37,7 +37,8 @@ const sidebars = {
 					},
 					items: [
 						'app-store/apps/cloud-logs/aws/aws',
-						'app-store/apps/custom'
+						'app-store/apps/custom',
+						'app-store/apps/saas-logs/github'
 					]
 				},
 				'app-store/tokens',
