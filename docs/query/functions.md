@@ -746,7 +746,7 @@ Translates the time delta (in seconds) to human readable time with suffix (year,
 Syntax: `human_readable_duration(field/function/integer), human_readable_duration(field/function/integer, maximum_unit)`
 
 ```sql
-SELECT human_readable_quantity(10000) FROM table1
+SELECT human_readable_duration(3600) FROM table1
 ```
 
-Output: `"10.00 thousand"`
+Output: `"1 hour"`
