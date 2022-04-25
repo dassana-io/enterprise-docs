@@ -46,6 +46,10 @@ import SlackSupport from '../../../../shared/slack-support.md'
 
 Congrats! You've successfully deployed the Dassana AWS app. Now, your AWS logs will be streamed to the Dassana Cloud Log lake and become instantly queryable. View the log references on the sidebar for sample queries to get you started.
 
+## Handling Failures
+
+The Dassana AWS app includes automatic retries at the execution and invocation levels. However, sometimes retries aren't enough. A common example is when your Dassana token was rotated in the console, but not updated in your lambda configuration. Logs that fail to be delivered after exhausting your configured retry capacity will be sent to a SQS DeadLetterQueue (named YourStackName-DeadLetterQueue). You can send these logs back to Dassana by clicking 'Start DLQ redrive' in the SQS console. 
+
 ## App IDs
 
 | Log Type                        | App ID               |
