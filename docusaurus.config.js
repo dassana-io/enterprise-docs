@@ -4,7 +4,7 @@
 /** @type {import('@docusaurus/types').Config} */
 const config = {
 	title: 'Dassana Enterprise',
-	tagline: 'Cloud Log Lake',
+	tagline: 'Security Data Lake',
 	url: 'https://docs.dassana.cloud',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
@@ -26,17 +26,13 @@ const config = {
 			/** @type {import('@docusaurus/preset-classic').Options} */
 			({
 				docs: {
+					routeBasePath: '/',
 					sidebarPath: require.resolve('./sidebars.js'),
 					// Please change this to your repo.
 					editUrl:
 						'https://github.com/dassana-io/enterprise-docs/edit/main/'
 				},
-				blog: {
-					showReadingTime: true,
-					// Please change this to your repo.
-					editUrl:
-						'https://github.com/dassana-io/enterprise-docs/edit/main/blog/'
-				},
+				blog: false,
 				theme: {
 					customCss: require.resolve('./src/css/custom.css')
 				}
@@ -61,23 +57,17 @@ const config = {
 			  indexName: 'enterprise_docs'
 			},
 			navbar: {
+				title: 'Docs',
 				logo: {
 					alt: 'Dassana Logo',
 					src: 'img/logo.svg'
 				},
 				items: [
-					{
-						type: 'doc',
-						docId: 'intro',
-						position: 'left',
-						label: 'Docs'
-					},
-					{ to: '/blog', label: 'Blog', position: 'left' },
-					{
-						className: 'header-github-link',
-						href: 'https://github.com/dassana-io/enterprise-docs',
-						position: 'right'
-					}
+					// {
+					// 	className: 'header-github-link',
+					// 	href: 'https://github.com/dassana-io/enterprise-docs',
+					// 	position: 'right'
+					// }
 				]
 			},
 			footer: {
