@@ -1,0 +1,80 @@
+## What is Dassana App Plugin?
+
+A Grafana Application plugin bundles dashboards, panels, and datasources into a single application for ease of use. We at Dassana have bundled a Grafana datasource to connect with our Query service (i.e SLQ) for out-of-box charts for the community. Accompanying the datasource are default dashboards -- namely CloudTrail.
+
+## Getting started locally
+
+### Setting up Grafana locally with Docker
+
+```
+docker run -d -p 3000:3000 --name=grafana grafana/grafana:8.4.4
+```
+
+### Installing the application
+
+```
+docker exec -it grafana grafana-cli --pluginUrl https://dassana-grafana.s3.amazonaws.com/releases/dassana-app-1.0.0.zip plugins install dassana-app
+```
+
+You will likely need to restart Grafana as highlighted in the CLI response.
+
+```
+docker restart grafana
+```
+
+### Configure Dassana Data Source & App
+
+1. On the left side bar, go to `Settings` -> `Plugins` -> `Applications` and search for Dassana
+
+2. Click the `Enable Dassana` button on the `Grafana Dassana App` page
+
+3. Go back to the left nav bar, go to `Settings` -> `Datasources` and click `Add data source`
+
+4. Search for `Dassana` and create a `Dassana data source`
+
+5. Configure with https://dquery.dassana.cloud and your respective AccessToken, then click `Save & test`
+  - URL is the Dassana endpoint
+  - AccessToken can be found on `https://console.dassana.cloud` -> `App Store` -> `Tokens`
+
+## Set up your Dassana App with flaws.cloud
+
+Ingest the [flaws.cloud](https://summitroute.com/blog/2020/10/09/public_dataset_of_cloudtrail_logs_from_flaws_cloud) data into `aws_cloudtrail` app 
+
+## How to create a chart
+
+To create a chart, you need dashboards. 
+
+On the Grafana console, go to the `+` icon on the left nav bar and `Create` a `Dashboard`.
+
+Or, you can use the default `CloudTrail` dashboard that comes with the App.
+
+On the right drop down menu, you can click on the `Add panel +` button.
+
+### Example 1: Gauge chart
+
+Add 
+```
+select count(*) from aws_cloudtrail
+```
+to the code editor on the bottom.
+
+Next, configure the chart on the top right -- the default is `Time series` -- to use a `Gauge` for a simple gauge of the CloudTrail event count.
+
+### Example 2: Bar chart
+
+Add 
+```
+select count(*) as count, errorCode from aws_cloudtrail
+where errorCode != '' 
+group by errorCode
+order by count desc limit 6
+```
+to the code editor on the bottom.
+
+Next, configure the chart on the top right -- the default is `Time series` -- to use a `Bar chart` for a simple gauge of the CloudTrail event count.
+
+
+## How to get started on Grafana Cloud 
+
+The App is pending approval on Grafana's marketplace -- stay tuned!
+
