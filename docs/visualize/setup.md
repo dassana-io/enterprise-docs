@@ -1,8 +1,9 @@
 # Setup
 
 Dassana's Grafana application plugin comes bundled with the following:
-- CloudTrail dashboard
-- Dassana data source -> Responsible for communicating with Dassana's query service to fetch your data.
+
+-   CloudTrail dashboard
+-   Dassana data source -> Responsible for communicating with Dassana's query service to fetch your data.
 
 ## Getting Started Locally
 
@@ -11,6 +12,7 @@ In order to start visualizing your data, ensure you have [docker](https://docs.d
 :::
 
 ### Install Grafana
+
 ```
 docker run -d -p 3000:3000 --name=grafana grafana/grafana:8.4.4
 ```
@@ -29,8 +31,9 @@ docker restart grafana
 
 ### Grafana Login
 
-1. Navigate to `http://localhost:3000/` in your browser.
+1. Navigate to http://localhost:3000/ in your browser.
 2. On the login screen, use the following credentials:
+
 ```
 username: admin
 password: admin
@@ -58,7 +61,6 @@ password: admin
 1. Click on the `Dashboards` tab
 1. Click on `CloudTrail`
 
-## Getting Started With Grafana Cloud 
+## Getting Started With Grafana Cloud
 
 The Dassana app is pending approval on Grafana's marketplace -- stay tuned!
-
