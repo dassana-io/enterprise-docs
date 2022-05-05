@@ -61,6 +61,18 @@ const sidebars = {
 		},
 		{
 			type: 'category',
+			label: '📊 Visualize',
+			link: {
+				type: 'doc',
+				id: 'visualize/intro'
+			},
+			items: [
+				'visualize/setup',
+				'visualize/charting'
+			]
+		},
+		{
+			type: 'category',
 			label: '🌎 Org Manager',
 			link: {
 				type: 'doc',
