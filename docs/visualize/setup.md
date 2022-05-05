@@ -40,7 +40,7 @@ password: admin
 
 1. On the left sidebar, go to `Settings` -> `Plugins`
 1. In the plugin search bar, find `Dassana` and click into it
-1. Click the `Enable Dassana` button
+1. Click the `Enable` button
 
 ### Configure Dassana Data Source
 
