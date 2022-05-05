@@ -8,9 +8,9 @@ Head over to your Github Organization's Settings page. You can find this page by
 
 On the left-hand menu, click 'Webhooks' under the Code, planning, and automation section. Then, click 'Add webhook'. Fill out the fields as follows (remember to replace your dassana token):
 
-- Payload URL: `https://ingestion.dassana.cloud/logs?appId=github&token=YOUR_DASSANA_TOKEN`
-- Content type: `application/json`
-- Secret: `You can leave this blank` (We use your token in the URL to authenticate you)
+-   Payload URL: `https://ingestion.dassana.cloud/logs?appId=github&token=YOUR_DASSANA_TOKEN`
+-   Content type: `application/json`
+-   Secret: `You can leave this blank` (We use your token in the URL to authenticate you)
 
 ## What if I don't have permissions for my organization?
 

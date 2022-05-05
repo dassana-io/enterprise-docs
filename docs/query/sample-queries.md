@@ -1,12 +1,13 @@
 # Sample Queries
 
 ## Basic Filter
+
 ```json title="Data"
 {
     "userIdentity": {
-        "accessKeyId": "123456789",
+        "accessKeyId": "123456789"
     },
-    "eventSource": "ec2.amazonaws.com",
+    "eventSource": "ec2.amazonaws.com"
 }
 ```
 
@@ -21,6 +22,7 @@ select eventSource from aws_cloudtrail where userIdentity.accessKeyId = 'EXAMPLE
 ```
 
 ## Order by
+
 ```json title="Data"
 {
     "eventSource": "ec2.amazonaws.com",
@@ -44,6 +46,7 @@ select eventSource, eventName from aws_cloudtrail order by eventName desc
 ```
 
 ## Count + In
+
 ```json title="Data"
 {
     "eventSource": "ec2.amazonaws.com",
@@ -70,6 +73,7 @@ select count(*) AS c from aws_cloudtrail where eventSource in ('ec2.amazonaws.co
 ```
 
 ## Group By + Distinct Count
+
 ```json title="Data"
 {
     "userIdentity": {
@@ -109,6 +113,7 @@ select userIdentity.userName, count(distinct eventSource) as c from aws_cloudtra
 ```
 
 ## Subquery Filter
+
 ```json title="Data in aws_cloudtrail"
 {
     "userIdentity": {
@@ -123,6 +128,7 @@ select userIdentity.userName, count(distinct eventSource) as c from aws_cloudtra
     "eventName": "RunInstances",
 }
 ```
+
 ```json title="Data in other_data"
 {
     "userIdentity": {
@@ -139,8 +145,8 @@ select userIdentity.userName, count(distinct eventSource) as c from aws_cloudtra
 ```
 
 ```sql title="Query"
-select eventName 
-from aws_cloudtrail 
+select eventName
+from aws_cloudtrail
 where userIdentity.accessKeyId in (select userIdentity.accessKeyId from other_data where userName = 'Milo')
 ```
 
@@ -149,43 +155,45 @@ where userIdentity.accessKeyId in (select userIdentity.accessKeyId from other_da
 |------|-----------|
 | ...  | GetObject |
 ```
+
 ## Select JSON Nested Array Path
+
 ```json title="Data"
 {
-	"requestParameters": {
-		"ipPermissions": {
-			"items": [
-				{
-					"ipRanges": {
-						"items": [
-							{
-								"cidrIp": "0.0.0.0/0"
-							}
-						]
-					},
-					"toPort": 500
-				},
-				{
-					"ipRanges": {
-						"items": [
-							{
-								"cidrIp": "0.0.0.0/0"
-							}
-						]
-					},
-					"toPort": 800
-				}
-			]
-		}
-	},
-	"eventName": "AuthorizeSecurityGroupIngress"
+    "requestParameters": {
+        "ipPermissions": {
+            "items": [
+                {
+                    "ipRanges": {
+                        "items": [
+                            {
+                                "cidrIp": "0.0.0.0/0"
+                            }
+                        ]
+                    },
+                    "toPort": 500
+                },
+                {
+                    "ipRanges": {
+                        "items": [
+                            {
+                                "cidrIp": "0.0.0.0/0"
+                            }
+                        ]
+                    },
+                    "toPort": 800
+                }
+            ]
+        }
+    },
+    "eventName": "AuthorizeSecurityGroupIngress"
 }
 ```
 
 ```sql title="Query"
-select JSON_QUERY($,'$.requestParameters.ipPermissions.items[*].toPort') as toPorts, 
-JSON_QUERY($,'$.requestParameters.ipPermissions.items[*].ipRanges.items[*].cidrIp') as cidrIPs 
-from aws_cloudtrail 
+select JSON_QUERY($,'$.requestParameters.ipPermissions.items[*].toPort') as toPorts,
+JSON_QUERY($,'$.requestParameters.ipPermissions.items[*].ipRanges.items[*].cidrIp') as cidrIPs
+from aws_cloudtrail
 where eventName = 'AuthorizeSecurityGroupIngress'
 ```
 
@@ -196,21 +204,22 @@ where eventName = 'AuthorizeSecurityGroupIngress'
 ```
 
 ## Filter JSON Array
+
 ```json title="Data"
 {
-	"requestParameters": {
-		"groupId": "sg-0b128b58ba5cfd7fd",
-		"ipPermissions": {
-			"items": [
-				{
-					"ipRanges": {
-						"items": [
-							{
-								"cidrIp": "0.0.0.0/0"
-							}
-						]
-					}
-	            }
+    "requestParameters": {
+        "groupId": "sg-0b128b58ba5cfd7fd",
+        "ipPermissions": {
+            "items": [
+                {
+                    "ipRanges": {
+                        "items": [
+                            {
+                                "cidrIp": "0.0.0.0/0"
+                            }
+                        ]
+                    }
+                }
             ]
         }
     }
@@ -218,8 +227,8 @@ where eventName = 'AuthorizeSecurityGroupIngress'
 ```
 
 ```sql title="Query"
-select requestParameters.groupId as sg 
-from aws_cloudtrail 
+select requestParameters.groupId as sg
+from aws_cloudtrail
 where JSON_VALUE($,'$.requestParameters.ipPermissions.items[*].ipRanges.items[*].cidrIp') = '0.0.0.0/0'
 ```
 
@@ -230,7 +239,9 @@ where JSON_VALUE($,'$.requestParameters.ipPermissions.items[*].ipRanges.items[*]
 ```
 
 ## Filter Array All
+
 In the following examples, we are looking for data that contains an array at the specified path, in which the specified operator returns true when applied to each element of the array.
+
 ```json title="Data Primitive"
 {
     "user": "Bob",
@@ -288,6 +299,7 @@ where array abc.items contains all (foo > 3)
 ## Filter Array Exact
 
 In the following examples, we are looking for data that contains an array at the specified path equivalent to the array specified in the query.
+
 ```json title="Data"
 {
     "user": "Bob",
@@ -318,6 +330,7 @@ where array abc.items = [2, 3, 4]
 ## Filter Array Any
 
 In the following examples, we are looking for data that contains an array at the specified path equivalent to the array specified in the query.
+
 ```json title="Data Primitive"
 {
     "user": "Bob",
@@ -374,7 +387,8 @@ where array abc.items contains any (foo > 2)
 | ...  | Alice  |
 ```
 
-## Filter Array None 
+## Filter Array None
+
 ```json title="Data"
 {
 	"requestParameters": {

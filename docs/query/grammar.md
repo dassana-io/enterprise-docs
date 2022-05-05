@@ -30,5 +30,5 @@ expr:
 function:
   function([* | arguments, ...])
     where arguments can be either a key, a literal or another function call
-    special document argument is $, example JSON_QUERY($, '$.eventName'), where the JSONPath will be queried on the entire document 
+    special document argument is $, example JSON_QUERY($, '$.eventName'), where the JSONPath will be queried on the entire document
 ```

@@ -39,6 +39,7 @@ If your events are encapsulated in an object (as seen above), add a `x-dassana-d
 :::
 
 ### csv
+
 There are two CSV data types we support: data with headers and without. For example:
 
 ```csv
@@ -48,6 +49,7 @@ time,duration,SrcDevice,DstDevice,Protocol,SrcPort,DstPort,SrcPackets,DstPackets
 765,14369,Comp492856,Mail,6,Port30344,443,227,214,32300,9844
 765,14431,Comp782574,Mail,6,Port28068,443,1637,3313,75302,1220077
 ```
+
 The above data contains headers on the first line. If your CSV data is of this type, ingest the data as follows:
 
 ```bash
@@ -60,6 +62,7 @@ curl https://ingestion.dassana.cloud/logs?withHeader=true \
 ```
 
 If your data does not contain headers, for example:
+
 ```csv
 761,4434,Comp132598,Comp817788,6,Port12597,22,89159,85257,15495068,69768940
 764,13161,Comp178973,Comp164069,17,137,137,325,0,30462,0
@@ -123,6 +126,7 @@ In this section, we'll configure Fluentd to stream logs to Dassana.
 2. Edit your source in the configuration file as follows.
 
 Add the following keys to your source
+
 ```html
 <source>
   ...
@@ -136,18 +140,13 @@ Add the following keys to your source
 
 ```html
 <match your_input>
-  @type http
-  endpoint https://ingestion.dassana.cloud/logs
-  headers {"x-dassana-app-id":"YOUR_APP_ID", "x-dassana-token":"YOUR_TOKEN", "Content-type":"application/x-ndjson"}
-  bulk_request true
-  <buffer>
-    @type memory
-    chunk_limit_size 5MB
-    flush_interval 1s
-    retry_max_times 5
-    retry_type periodic
-    retry_wait 2
-  </buffer>
+    @type http endpoint https://ingestion.dassana.cloud/logs headers
+    {"x-dassana-app-id":"YOUR_APP_ID", "x-dassana-token":"YOUR_TOKEN",
+    "Content-type":"application/x-ndjson"} bulk_request true
+    <buffer>
+        @type memory chunk_limit_size 5MB flush_interval 1s retry_max_times 5
+        retry_type periodic retry_wait 2
+    </buffer>
 </match>
 ```
 
@@ -155,17 +154,13 @@ Alternatively, if you are ingesting csv logs, include the following output. If y
 
 ```html
 <match your_input>
-  @type http
-  endpoint https://ingestion.dassana.cloud/logs?withHeader=true
-  headers {"x-dassana-app-id":"YOUR_APP_ID", "x-dassana-token":"YOUR_TOKEN", "Content-type":"text/csv"}
-  <buffer>
-    @type memory
-    chunk_limit_size 5MB
-    flush_interval 1s
-    retry_max_times 5
-    retry_type periodic
-    retry_wait 2
-  </buffer>
+    @type http endpoint https://ingestion.dassana.cloud/logs?withHeader=true
+    headers {"x-dassana-app-id":"YOUR_APP_ID", "x-dassana-token":"YOUR_TOKEN",
+    "Content-type":"text/csv"}
+    <buffer>
+        @type memory chunk_limit_size 5MB flush_interval 1s retry_max_times 5
+        retry_type periodic retry_wait 2
+    </buffer>
 </match>
 ```
 
@@ -191,7 +186,7 @@ type = "http"
 inputs = [ "YOUR_SOURCE_NAME" ]
 uri = "https://ingestion.dassana.cloud/logs"
 compression = "gzip"
-encoding.codec = "ndjson" 
+encoding.codec = "ndjson"
 batch.max_bytes = 100000
 [sinks.dassana.request.headers]
 Content-type = "application/x-ndjson"

@@ -43,9 +43,9 @@ Fluentd will now tail your Apache log file, parse the relevant fields, and route
 
 ```html
 <match apache.access>
-	@type http endpoint https://ingestion.dassana.cloud/logs open_timeout 2
-	headers {"x-dassana-app-id":"apache", "x-dassana-token":"YOUR_TOKEN_HERE"}
-	<buffer> flush_interval 10s </buffer>
+    @type http endpoint https://ingestion.dassana.cloud/logs open_timeout 2
+    headers {"x-dassana-app-id":"apache", "x-dassana-token":"YOUR_TOKEN_HERE"}
+    <buffer> flush_interval 10s </buffer>
 </match>
 ```
 
@@ -63,14 +63,14 @@ Congrats! You've successfully setup Fluentd to forward your Apache logs to Dassa
 
 ```json
 {
-	"host": "xxx.xxx.x.x",
-	"user": null,
-	"method": "GET",
-	"path": "/",
-	"code": 200,
-	"size": 777,
-	"referer": null,
-	"agent": "Opera/12.0"
+    "host": "xxx.xxx.x.x",
+    "user": null,
+    "method": "GET",
+    "path": "/",
+    "code": 200,
+    "size": 777,
+    "referer": null,
+    "agent": "Opera/12.0"
 }
 ```
 
