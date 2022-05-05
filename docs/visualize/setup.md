@@ -18,7 +18,7 @@ docker run -d -p 3000:3000 --name=grafana grafana/grafana:8.4.4
 ### Install Dassana's Grafana App
 
 ```
-docker exec -it grafana grafana-cli --pluginUrl https://dassana-grafana.s3.amazonaws.com/releases/dassana-app-1.0.0.zip plugins install dassana-app
+docker exec -it grafana grafana-cli --pluginUrl https://dassana-grafana-prod.s3.amazonaws.com/releases/dassana-app-1.0.0.zip plugins install dassana-app
 ```
 
 Please restart Grafana as highlighted in the CLI response.
