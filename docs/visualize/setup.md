@@ -27,6 +27,15 @@ Please restart Grafana as highlighted in the CLI response.
 docker restart grafana
 ```
 
+### Grafana Login
+
+1. Navigate to `http://localhost:3000/` in your browser.
+2. On the login screen, use the following credentials:
+```
+username: admin
+password: admin
+```
+
 ### Enable Dassana App
 
 1. On the left sidebar, go to `Settings` -> `Plugins`
