@@ -9,6 +9,12 @@ Getting started with Slack is super easy!
 
 3. Review the application permissions + select the channel you want your notifications sent to and click `Allow`
 
+:::info Different slack workspace?
+
+Use the dropdown on the top right to change the workspace.
+
+:::
+
 ![Slack Permissions](/img/integrations/slack/slack-perms.png)
 
 4. Next you will be redirected back to the integrations page where you will see your channel added
