@@ -14,8 +14,8 @@ jobs:
           sudo apt-get update && sudo apt-get install jq -y
       - name: Checkout
         uses: actions/checkout@v2.3.1
+      - uses: docker-practice/actions-setup-docker@master
       - name: Run crawler
-        uses: docker-practice/actions-setup-docker@master
         run: | 
           set -x
           docker version
