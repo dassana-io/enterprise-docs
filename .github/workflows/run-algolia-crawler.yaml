@@ -2,7 +2,7 @@ name: Run Algolia Crawler
 on:
   push:
     branches:
-      - gha-crawler
+      - master
 jobs:
   run-crawler:
     permissions:
