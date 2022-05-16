@@ -6,7 +6,7 @@ on:
 jobs:
   run-crawler:
     permissions:
-      content: read
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Install jq
