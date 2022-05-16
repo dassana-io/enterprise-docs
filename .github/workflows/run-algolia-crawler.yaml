@@ -1,0 +1,22 @@
+name: Run Algolia Crawler
+on:
+  push:
+    branches:
+      - gha-crawler
+jobs:
+  run-crawler:
+    permissions:
+      content: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install jq
+        run: |
+          sudo apt-get update && sudo apt-get install jq -y
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+      - name: Run crawler
+        uses: docker-practice/actions-setup-docker@master
+        run: | 
+          set -x
+          docker version
+          docker run -it --env-file=.env -e \"CONFIG=$(cat ./config.json | jq -r tostring)\" algolia/docsearch-scraper
