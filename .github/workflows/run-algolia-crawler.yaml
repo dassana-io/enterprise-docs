@@ -1,0 +1,21 @@
+name: Run Algolia Crawler
+on:
+  push:
+    branches:
+      - master
+jobs:
+  run-crawler:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install jq
+        run: |
+          sudo apt-get update && sudo apt-get install jq -y
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+      - uses: darrenjennings/algolia-docsearch-action@master
+        with:     
+          algolia_application_id: ${{ secrets.APPLICATION_ID }}
+          algolia_api_key: ${{ secrets.API_KEY }}
+          file: './config.json'
