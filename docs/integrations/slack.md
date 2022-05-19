@@ -2,7 +2,7 @@
 
 Getting started with Slack is super easy!
 
-1. Head over to the [integrations](https://console.dassana.cloud/integrations) page
+1. Head over to the [integrations](https://console.dassana.dev/integration) page
 2. Under Slack, click `Add New`
 
 ![Slack Integration](/img/integrations/slack/slack-empty.png)
