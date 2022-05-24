@@ -20,3 +20,8 @@ Use the dropdown on the top right to change the workspace.
 4. Next you will be redirected back to the integrations page where you will see your channel added
 
 ![Slack Channel Added](/img/integrations/slack/slack-added.png)
+
+Note: In case if you select private channel then make sure Dassana App is added under Apps in the integration section of private channel.
+
+![Slack_Private_Channel](/img/integrations/slack/slack-privatechannel.png)
+
