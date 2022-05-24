@@ -70,7 +70,7 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: '🔌 Notification Rules',
+            label: '🔔 Notification Rules',
             link: {
                 type: 'doc',
                 id: 'notificationrules/intro',

@@ -2,7 +2,7 @@
 
 Creation and Configuration of Notification Rule is easy.
 
-1. Head over to the [Notification Rules](https://console.dassana.cloud) Page
+1. Head over to the [Notification Rules](https://console.dassana.cloud/notificationRules) Page
 2. Click on Notification Rules in the menu
 
    ![NotificationRules_AddNew](/img/notificationrules/notification-rules-addnew.png)
