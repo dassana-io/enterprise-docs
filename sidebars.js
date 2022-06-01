@@ -73,9 +73,9 @@ const sidebars = {
             label: '🔔 Notification Rules',
             link: {
                 type: 'doc',
-                id: 'notificationrules/intro',
+                id: 'notification-rules/intro',
             },
-            items: ['notificationrules/rules'],
+            items: ['notification-rules/rules'],
         },
         {
             type: 'category',

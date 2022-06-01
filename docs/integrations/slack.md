@@ -2,7 +2,7 @@
 
 Getting started with Slack is super easy!
 
-1. Head over to the [integrations](https://console.dassana.cloud/integrations) page
+1. Head over to the [Integrations](https://console.dassana.cloud/integrations) page
 2. Under Slack, click `Add New`
 
 ![Slack Integration](/img/integrations/slack/slack-empty.png)
@@ -21,7 +21,10 @@ Use the dropdown on the top right to change the workspace.
 
 ![Slack Channel Added](/img/integrations/slack/slack-added.png)
 
-Note: In case if you select private channel then make sure Dassana App is added under Apps in the integration section of private channel.
+:::info Private Channels
 
-![Slack_Private_Channel](/img/integrations/slack/slack-privatechannel.png)
+Dassana can even send notifications to private Slack channels. In Slack, navigate to your private channel. Then click on the `Integrations` tab and ensure that the Dassana App is added like so:
 
+![Slack Private Channel](/img/integrations/slack/slack-privatechannel.png)
+
+:::
