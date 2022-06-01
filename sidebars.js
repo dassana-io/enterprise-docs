@@ -70,6 +70,15 @@ const sidebars = {
         },
         {
             type: 'category',
+            label: '🔔 Notification Rules',
+            link: {
+                type: 'doc',
+                id: 'notification-rules/intro',
+            },
+            items: ['notification-rules/rules'],
+        },
+        {
+            type: 'category',
             label: '🔌 Integrations',
             link: {
                 type: 'doc',
