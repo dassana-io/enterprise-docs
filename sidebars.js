@@ -25,7 +25,7 @@ const sidebars = {
             label: '📱 App Store',
             link: {
                 type: 'doc',
-                id: 'app-store/intro',
+                id: 'app-store/intro'
             },
             items: [
                 {
@@ -33,71 +33,80 @@ const sidebars = {
                     label: 'Apps',
                     link: {
                         type: 'doc',
-                        id: 'app-store/apps/apps',
+                        id: 'app-store/apps/apps'
                     },
                     items: [
                         'app-store/apps/cloud-logs/aws/aws',
                         'app-store/apps/custom',
-                        'app-store/apps/saas-logs/github',
-                    ],
+                        'app-store/apps/saas-logs/github'
+                    ]
                 },
                 'app-store/tokens',
-                'app-store/limits',
-            ],
+                'app-store/limits'
+            ]
         },
         {
             type: 'category',
             label: '🔎 Query',
             link: {
                 type: 'doc',
-                id: 'query/intro',
+                id: 'query/intro'
             },
             items: [
                 'query/sample-queries',
                 'query/functions',
                 'query/grammar',
-                'query/limits',
-            ],
+                'query/limits'
+            ]
         },
         {
             type: 'category',
             label: '📊 Visualize',
             link: {
                 type: 'doc',
-                id: 'visualize/intro',
+                id: 'visualize/intro'
             },
-            items: ['visualize/setup', 'visualize/charting'],
+            items: ['visualize/setup', 'visualize/charting']
+        },
+        {
+            type: 'category',
+            label: '🕵️‍♀️ Detections',
+            link: {
+                type: 'doc',
+                id: 'detections/intro'
+            },
+            items: ['detections/tagging']
         },
         {
             type: 'category',
             label: '🔔 Notification Rules',
             link: {
                 type: 'doc',
-                id: 'notification-rules/intro',
+                id: 'notification-rules/intro'
             },
-            items: ['notification-rules/rules'],
+            items: ['notification-rules/create']
         },
         {
             type: 'category',
             label: '🔌 Integrations',
             link: {
                 type: 'doc',
-                id: 'integrations/intro',
+                id: 'integrations/intro'
             },
-            items: ['integrations/slack'],
+            items: ['integrations/slack']
         },
         {
             type: 'category',
             label: '🌎 Org Manager',
             link: {
                 type: 'doc',
-                id: 'org-manager/intro',
+                id: 'org-manager/intro'
             },
-            items: ['org-manager/limits'],
+            items: ['org-manager/limits']
         },
         'billing/intro',
-        'support',
-    ],
+        'support'
+    ]
 }
 
 module.exports = sidebars
