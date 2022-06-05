@@ -4,7 +4,7 @@ In order to be notified about detections, you need to create a notification rule
 
 ## Recommended Tags
 
-While tags are just strings, Dassana uses a specific format of key and value pairs delimited using a colon:
+While tags are just strings, Dassana uses a specific format of key and value pairs delimited using a colon for the default detections that are shipped out-of-the-box:
 
 `vendor:aws` - Vendors would be AWS, Azure, GCP, GitHub, etc.
 
@@ -12,7 +12,7 @@ While tags are just strings, Dassana uses a specific format of key and value pai
 
 `service:ec2` - Cloud service like ec2, s3, iam, etc.
 
-`app:aws_cloudtrail` - App ID from Dassana's [app store](https://console.dassana.dev/appStore).
+`app:aws_cloudtrail` - App id from Dassana's [app store](https://console.dassana.dev/appStore).
 
 `categorization:iam` - High level categories. Options used by Dassana - cryptography, iam, networking, storage, public, visibility.
 
@@ -34,7 +34,7 @@ Adding all three mitre related tags will also show the mitre classification on t
 
 `requirement:monitoring` - Compliance requirement
 
-`section:4.6` - Compiance section
+`section:4.6` - Compliance section
 
 Adding all four compliance related tags will also show the compliance information on the [detections](https://console.dassana.dev/detections) page.
 
