@@ -1,6 +1,6 @@
 # Tagging Strategy
 
-In order to be notified about detections, you need to create a notification rule. [Notification rules](https://console.dassana.dev/notificationRules) target detections using severity or tags. By tagging your custom detections, you can fine tune exactly what to be notified about and where.
+In order to be notified about detections, you need to create a notification rule. [Notification rules](https://console.dassana.cloud/notificationRules) target detections using severity or tags. By tagging your custom detections, you can fine tune exactly what to be notified about and where.
 
 ## Recommended Tags
 
@@ -12,7 +12,7 @@ While tags are just strings, Dassana uses a specific format of key and value pai
 
 `service:ec2` - Cloud service like ec2, s3, iam, etc.
 
-`app:aws_cloudtrail` - App id from Dassana's [app store](https://console.dassana.dev/appStore).
+`app:aws_cloudtrail` - App id from Dassana's [app store](https://console.dassana.cloud/appStore).
 
 `categorization:iam` - High level categories. Options used by Dassana - cryptography, iam, networking, storage, public, visibility.
 
@@ -24,7 +24,7 @@ While tags are just strings, Dassana uses a specific format of key and value pai
 
 `technique:TA0006-credential-access` - Mitre technique
 
-Adding all three mitre related tags will also show the mitre classification on the [detections](https://console.dassana.dev/detections) page.
+Adding all three mitre related tags will also show the mitre classification on the [detections](https://console.dassana.cloud/detections) page.
 
 ### Compliance Mapping
 
@@ -36,7 +36,7 @@ Adding all three mitre related tags will also show the mitre classification on t
 
 `section:4.6` - Compliance section
 
-Adding all four compliance related tags will also show the compliance information on the [detections](https://console.dassana.dev/detections) page.
+Adding all four compliance related tags will also show the compliance information on the [detections](https://console.dassana.cloud/detections) page.
 
 ## Validation
 
