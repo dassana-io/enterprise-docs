@@ -166,7 +166,7 @@ select to_month(to_date($time)) as month, count() from netflow1 x group by month
 
 ### Document Reference
 
-`$` is a reference to the meta-column for the JSON raw document as string. It is used in [Document Predicates](#document-predicates) and [JSON functions](./functions#json-functions).
+`$` is a reference to the meta-column for the JSON raw document as string. It is only allowed in [JSON functions](./functions#json-functions). Additionally there are [Document Predicates](#document-predicates) which allow free-text like searches on the entire document.
 
 Example:
 
