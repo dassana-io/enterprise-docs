@@ -53,9 +53,9 @@ const sidebars = {
                 id: 'query/intro'
             },
             items: [
+                'query/SLQ',
                 'query/sample-queries',
                 'query/functions',
-                'query/grammar',
                 'query/limits'
             ]
         },
