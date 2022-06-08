@@ -1,6 +1,6 @@
 # 🔎 Query
 
-Once you have some data ingested into Dassana's cloud lake, you can start writing some SLQ to query the data. SLQ is similar to SQL, with some added juice, so no need to learn yet another query language! 😅
+Once you have some data ingested into Dassana's cloud lake, you can start writing some SLQ to query the data. SLQ is similar to SQL, with some added sauce, so no need to learn yet another query language! 😅
 
 :::tip Example
 

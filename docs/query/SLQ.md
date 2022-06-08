@@ -108,6 +108,13 @@ doc_predicates
     | { DOC | $ } { LIKE | ILIKE } like_pattern
 ```
 
+## Limitations
+
+1. operands utilizing `field_reference` does not pre-validate data type, therefore it is possible that an operation may fail at execution time due to mismatched data type between the operands causing a query failure.
+2. `IS NOT NULL` only allows `field_reference`
+3. All queries have a limit of 100 documents.
+4. All sub-queries (excpet `ARRAY CONTAINS ()`) has a limit of 1M documents.
+
 ## Schema
 
 Schema is table reference in Dassana. It can either be an actual reference to the App (by app_id) or a virtual reference to an alias.
@@ -117,7 +124,7 @@ Schema is table reference in Dassana. It can either be an actual reference to th
 SLQ unlike regular SQL allows searching multiple schemas as the same time. This is done by either using the `ALL` keyword (shorthand: `*`) reference or by providing an array of `app_id`.
 
 Limitations:
-1. Only Meta References and Normalized Fields are allowed. Normalized fields restricts apply as usual.
+1. Only Meta References and Normalized Fields are allowed. Normalized fields restrictions apply as usual.
 2. Functions only allows Meta References or Literals as args. Regular fields are not allowed.
 
 ## Literal
@@ -190,9 +197,125 @@ References to JSON Objects are not allowed, only terminal primitive type or arra
 
 Note: Currently `array_index` is only supported for the last `field_part`.
 
-## Limitations
+## Document Predicates
 
-1. operands utilizing `field_reference` does not pre-validate data type, therefore it is possible that an operation may fail at execution time due to mismatched data type between the operands causing a query failure.
-2. `IS NOT NULL` only allows `field_reference`
-3. All queries have a limit of 100 documents.
-4. All sub-queries (excpet `ARRAY CONTAINS ()`) has a limit of 1M documents.
+Document predicate allows free-text like searches on the raw document content.
+
+### DOC CONTAINS
+
+`CONTAINS` predicate returns documents which contains any of the input strings. The search strings must be minimum 3 characters long.
+
+Full Syntax: `DOC CONTAINS ANY ('string', 'string')`
+
+`$` can be used as a shorthand for `DOC` and `ANY` is optional.
+
+Examples:
+```sql
+DOC CONTAINS 'abc'
+
+$ contains 'abc'
+
+$ contains ('abc', 'xyz')
+```
+
+### DOC LIKE/ILIKE
+
+`LIKE` (`ILIKE` for case-insensitive) predicate allows like patten matching search on the raw document content. The pattern must have minimum of 3 non-wildcard characters.
+
+Full Syntax: `DOC [I]LIKE '%patten%'`
+
+`$` can be used as a shorthand for `DOC`. `ILIKE` for case-insentitive search.
+
+Examples:
+```sql
+DOC LIKE '%ABC?xyz%'
+
+$ like '%ABC?xyz%'
+
+$ ilike '%abc?xyz%'
+```
+
+## Array Predicates
+
+Array predicates allows searching documents based on the contents of one of the arrays.
+
+### Array Equality
+
+Equality test for arrays.
+
+This predicate can only be used for a terminal fields whose value is of type Array.
+
+```sql
+Document: { "my": { "array": [ "a", "b", "c" ] } }
+
+ARRAY my.array = [ 'a', 'b', 'c' ]  -- TRUE
+
+ARRAY my.array != [ 'a', 'b', 'c' ]  -- FALSE
+
+ARRAY my.array = [ 'b', 'c' ]  -- FALSE
+```
+
+### Array Contains Value
+
+Using this predicate elements of an Array can be tested individually against and operator and value operand. The predicate also allows for testing if any, all or none of the elements match the condition.
+
+This predicate can only be used for a terminal fields whose value is of type Array.
+
+Full Syntax:
+```sql
+ARRAY field_expr CONTAINS quantifier operator value
+
+quantifier: { ANY | ALL | NONE }
+operator: { = | { != | <> } | < | <= | > | => }
+```
+
+```sql
+Document: { "my": { "a1": [ "a", "b", "c" ], "a2": [ "y", "y" ], "a3": [ 1, 2 ] } }
+
+ARRAY my.a1 CONTAINS ANY = 'a'  -- TRUE
+ARRAY my.a1 CONTAINS ALL = 'a' -- FALSE
+ARRAY my.a1 CONTAINS NONE = 'z' -- TRUE
+ARRAY my.a1 CONTAINS ANY = 'z'  -- FALSE
+
+ARRAY my.a2 CONTAINS ANY = 'y' -- TRUE
+ARRAY my.a2 CONTAINS ALL = 'y' -- TRUE
+ARRAY my.a2 CONTAINS NONE = 'y' -- FALSE
+
+ARRAY my.a3 CONTAINS ANY < 2 -- TRUE
+ARRAY my.a3 CONTAINS ALL < 2 -- FALSE
+ARRAY my.a3 CONTAINS ALL <= 2 -- TRUE
+```
+
+### Array sub-query
+
+Using this predicate object elements of an Array can be tested individually against a subquery which allows for predicates restricted to object child elements. The predicate also allows for testing if any, all or none of the elements match the condition.
+
+This predicate can only be used for a non-terminal fields whose value is of type Array and have elements of type Object.
+
+`predicate_expr` subquery supports all predicates expressions except for `doc_predicates`.
+
+Full Syntax:
+```sql
+ARRAY field_expr CONTAINS quantifier ( predicate_expr )
+
+quantifier: { ANY | ALL | NONE }
+operator: { = | { != | <> } | < | <= | > | => }
+```
+
+```sql
+Document: { "arr": [ { "c1": "a", "c2": 1 }, { "c1": "b", "c2": 2 }, { "c1": "a", "c2": 3 } ] }
+
+ARRAY arr CONTAINS ANY ( c1 = 'a' AND c2 = 1 )  -- TRUE
+ARRAY arr CONTAINS ANY ( c1 = 'a' AND c2 = 2 )  -- FALSE
+ARRAY arr CONTAINS ANY ( c1 = 'a' AND c2 IN (1, 3) )  -- TRUE
+
+ARRAY arr CONTAINS ANY ( c1 = 'b' AND c2 = 2 )  -- TRUE
+ARRAY arr CONTAINS ANY ( c1 = 'b' AND c2 IN (1, 3) )  -- FALSE
+ARRAY arr CONTAINS ANY ( c1 = 'b' AND c2 IN (1, 2, 3) )  -- TRUE
+
+ARRAY arr CONTAINS ALL ( c2 <= 3 )  -- TRUE
+ARRAY arr CONTAINS ALL ( c1 = 'a' )  -- FALSE
+
+ARRAY arr CONTAINS NONE ( c2 < 1 )  -- TRUE
+ARRAY arr CONTAINS NONE ( c2 = 1 )  -- FALSE
+```

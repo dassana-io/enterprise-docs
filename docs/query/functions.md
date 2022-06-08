@@ -4,6 +4,18 @@
 Most of the functions listed below are **case insensitive** except for few explicitly mentioned.
 :::
 
+## General Functions
+
+### `coalesce`
+
+Dassana does not store NULL elements, therefore `COALESCE` function returns the first of its arguments that exists. Empty string `''` will be returned if all arguments don't exists. If one of the arguments is a literal then the literal always exists.
+
+```sql
+SELECT coalesce(col1, col2, 'default-val') FROM table1
+
+SELECT coalesce(userIdentity.sessionContext.sessionIssuer.userName, userIdentity.sessionIssuer.userName, userIdentity.principalId) AS user FROM aws_cloudtrail
+```
+
 ## Aggregate Functions
 
 ### `avg`
@@ -89,6 +101,56 @@ Output: `['role1', 'role2', 'role3', ...]`
 :::info
 Only supported for numerical values.
 :::
+
+### `plus`
+
+Add two values.
+
+Syntax: `plus(field/function/integer/decimal, field/function/integer/decimal)`
+
+```sql
+SELECT plus(salary, bonus) FROM employee
+```
+
+### `minus`
+
+Subtracts two values.
+
+Syntax: `minus(field/function/integer/decimal, field/function/integer/decimal)`
+
+```sql
+SELECT minus(salary, bonus) FROM employee
+```
+
+### `multiply`
+
+Multiplies two values.
+
+Syntax: `multiply(field/function/integer/decimal, field/function/integer/decimal)`
+
+```sql
+SELECT multiply(salary, 0.3) as tax FROM employee
+```
+
+### `divide`
+
+Divides two values.
+
+Syntax: `divide(field/function/integer/decimal, field/function/integer/decimal)`
+
+```sql
+SELECT divide($time, 1000) as epoch_in_seconds FROM employee
+```
+
+### `modulo`
+
+Calculates the remainder after division.
+
+Syntax: `modulo(field/function/integer/decimal, field/function/integer/decimal)`
+
+```sql
+SELECT modulo(salary, 2) = 0 as isEven FROM employee
+```
 
 ### `abs`
 
@@ -646,8 +708,6 @@ Output: `"project=abc"`
 ## JSON Functions
 
 :::note
-The JSON functions are **case sensitive**.
-
 $ → it is the special character for complete json object.
 :::
 
@@ -669,6 +729,16 @@ Syntax: `JSON_QUERY(json_field/function, path), JSON_QUERY($, path_from_root)`
 
 ```sql
 SELECT JSON_QUERY($, '$.eventVersion') FROM aws_cloudtrail
+```
+
+### `JSON_QUERY_ARRAY`
+
+Extract a JSON array into a native array to be used by array operations for the given json-path.
+
+Syntax: `JSON_QUERY_ARRAY(json_field/function, path), JSON_QUERY_ARRAY($, path_from_root)`
+
+```sql
+SELECT JSON_QUERY_ARRAY($, '$.path.to.array') FROM aws_cloudtrail
 ```
 
 ### `JSON_VALUE`
@@ -711,6 +781,28 @@ Syntax: `array_agg(field/function), array_agg(DISTINCT field/column)`
 SELECT array_agg(col1) FROM table1
 
 SELECT array_agg(DISTINCT col1) FROM table1
+```
+
+### `array_unnest`
+
+Expands an array to a set of rows. Other selected columns will be duplicated for each element for the array.
+
+:::note
+Only supported for array arguments
+:::
+
+Syntax: `array_unnest(field/function)`
+
+```sql
+SELECT array_unnest(col1) FROM table1
+
+Document: { "id": "one", "types": [ 1, 2, 3 ] }
+SELECT id, array_unnest(json_query_array($, '$.arr')) as type FROM table1
+Output:
+id  | type
+one | 1
+one | 2
+one | 3
 ```
 
 ## Format Functions
