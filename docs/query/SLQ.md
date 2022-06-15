@@ -1,10 +1,10 @@
 # SLQ
 
-**SLQ** (/slick/; **Structured Log Query**) is a SQL like language to query hierarchically structured records (documents). We only support the `SELECT` operation as data insertion is managed by [Apps](../app-store/apps)
+**SLQ** (/slick/; **Structured Log Query**) is a SQL like language to query hierarchically structured records (documents). We only support the `SELECT` operation as data insertion is managed by [Apps](../app-store/apps).
 
 ## Reference
 
-Since we support Arrays which is universally represented by `[]`, we use `{}` for metasymbols in our grammar to represent logical blocks. `{}?` represents an optional element and `{ | }` represents the a logical OR between sub-elements.
+Since we support Arrays which is universally represented by `[]`, we use `{}` (instead of `[]`) for metasymbols in our grammar to represent logical blocks. `{}?` represents an optional element and `{ | }` represents the a logical OR between sub-elements.
 
 ```sql
 query
@@ -123,7 +123,16 @@ Schema is table reference in Dassana. It can either be an actual reference to th
 
 SLQ unlike regular SQL allows searching multiple schemas as the same time. This is done by either using the `ALL` keyword (shorthand: `*`) reference or by providing an array of `app_id`.
 
+```sql
+select * from all
+
+select * from *
+
+select * from [ aws_cloudtrail, aws_vpc_flow, _custom_app ]
+```
+
 Limitations:
+
 1. Only Meta References and Normalized Fields are allowed. Normalized fields restrictions apply as usual.
 2. Functions only allows Meta References or Literals as args. Regular fields are not allowed.
 
@@ -143,7 +152,7 @@ Pattern: `[a-zA-Z0-9_]+`
 
 ## Functions
 
-The list of available function is available [here](./functions).
+The list of available functions is available [here](./functions).
 
 ## Meta References
 
@@ -168,7 +177,7 @@ select $schema from [aws_cloudtrail, aws_vpc_flow] where $ip = '1.1.1.1' order b
 Examples:
 
 ```sql
-select to_month(to_date($time)) as month, count() from netflow1 x group by month
+select to_month(to_date(divide($time, 1000))) as month, count() from netflow1 x group by month
 ```
 
 ### Document Reference
@@ -182,20 +191,34 @@ select * from * where $ contains 'search-me'
 ```
 
 ```sql
-json_query($, '$.path.to.key')
+select json_query($, '$.path.to.key') from _custom_app
 ```
 
 ## Field Reference
 
-Field references are similar column references and are used to reference fields in the document. Hierarchical fields are separated by period (.), which is the commonly used separator for nested elements.
+Field references are similar to column references and are used to reference fields in the document. Hierarchical fields are separated by period (.), which is the commonly used separator for nested elements.
 
 Field references can be used almost anywhere an expression `expr` is allowed.
 
+:::info SQL vs SLQ
 SQL difference: Table references are seperated by a colon ':' instead of period '.' to allow the SLQ parser to distinguish it from hierarchical separator.
+:::
 
-References to JSON Objects are not allowed, only terminal primitive type or array is allowed. Also, fields nested withing Array of Objects cannot be selected, but can be predicated upon using [ARRAY predicates](#array-predicates)
+```sql
+select eventSource from aws_cloudtrail
 
-Note: Currently `array_index` is only supported for the last `field_part`.
+select ct:eventSource from aws_cloudtrail as ct
+```
+
+References to JSON Objects are not allowed, only terminal primitive type or array is allowed. Also, fields nested withing Array of Objects cannot be selected, but can be predicated upon using [ARRAY predicates](#array-predicates).
+
+```sql
+select some_array[1] from _custom_app
+```
+
+:::note
+Currently `array_index` is only supported for the last `field_part`.
+:::
 
 ## Document Predicates
 
@@ -210,12 +233,13 @@ Full Syntax: `DOC CONTAINS ANY ('string', 'string')`
 `$` can be used as a shorthand for `DOC` and `ANY` is optional.
 
 Examples:
+
 ```sql
-DOC CONTAINS 'abc'
+select * from aws_cloudtrail where DOC CONTAINS 'abc'
 
-$ contains 'abc'
+select * from aws_cloudtrail where $ contains 'abc'
 
-$ contains ('abc', 'xyz')
+select * from aws_cloudtrail where $ contains ('abc', 'xyz')
 ```
 
 ### DOC LIKE/ILIKE
@@ -227,12 +251,13 @@ Full Syntax: `DOC [I]LIKE '%patten%'`
 `$` can be used as a shorthand for `DOC`. `ILIKE` for case-insentitive search.
 
 Examples:
+
 ```sql
-DOC LIKE '%ABC?xyz%'
+select * from aws_cloudtrail where DOC LIKE '%ABC?xyz%'
 
-$ like '%ABC?xyz%'
+select * from aws_cloudtrail where $ like '%ABC?xyz%'
 
-$ ilike '%abc?xyz%'
+select * from aws_cloudtrail where $ ilike '%abc?xyz%'
 ```
 
 ## Array Predicates
@@ -246,13 +271,13 @@ Equality test for arrays.
 This predicate can only be used for a terminal fields whose value is of type Array.
 
 ```sql
-Document: { "my": { "array": [ "a", "b", "c" ] } }
+Document: { "path": { "to": { "array": [ "a", "b", "c" ] } } }
 
-ARRAY my.array = [ 'a', 'b', 'c' ]  -- TRUE
+select * from aws_cloudtrail where ARRAY path.to.array = [ 'a', 'b', 'c' ]  -- TRUE
 
-ARRAY my.array != [ 'a', 'b', 'c' ]  -- FALSE
+select * from aws_cloudtrail where ARRAY path.to.array != [ 'a', 'b', 'c' ]  -- FALSE
 
-ARRAY my.array = [ 'b', 'c' ]  -- FALSE
+select * from aws_cloudtrail where ARRAY path.to.array = [ 'b', 'c' ]  -- FALSE
 ```
 
 ### Array Contains Value
@@ -262,6 +287,7 @@ Using this predicate elements of an Array can be tested individually against and
 This predicate can only be used for a terminal fields whose value is of type Array.
 
 Full Syntax:
+
 ```sql
 ARRAY field_expr CONTAINS quantifier operator value
 
@@ -272,18 +298,18 @@ operator: { = | { != | <> } | < | <= | > | => }
 ```sql
 Document: { "my": { "a1": [ "a", "b", "c" ], "a2": [ "y", "y" ], "a3": [ 1, 2 ] } }
 
-ARRAY my.a1 CONTAINS ANY = 'a'  -- TRUE
-ARRAY my.a1 CONTAINS ALL = 'a' -- FALSE
-ARRAY my.a1 CONTAINS NONE = 'z' -- TRUE
-ARRAY my.a1 CONTAINS ANY = 'z'  -- FALSE
+select * from aws_cloudtrail where ARRAY my.a1 CONTAINS ANY = 'a'  -- TRUE
+select * from aws_cloudtrail where ARRAY my.a1 CONTAINS ALL = 'a' -- FALSE
+select * from aws_cloudtrail where ARRAY my.a1 CONTAINS NONE = 'z' -- TRUE
+select * from aws_cloudtrail where ARRAY my.a1 CONTAINS ANY = 'z'  -- FALSE
 
-ARRAY my.a2 CONTAINS ANY = 'y' -- TRUE
-ARRAY my.a2 CONTAINS ALL = 'y' -- TRUE
-ARRAY my.a2 CONTAINS NONE = 'y' -- FALSE
+select * from aws_cloudtrail where ARRAY my.a2 CONTAINS ANY = 'y' -- TRUE
+select * from aws_cloudtrail where ARRAY my.a2 CONTAINS ALL = 'y' -- TRUE
+select * from aws_cloudtrail where ARRAY my.a2 CONTAINS NONE = 'y' -- FALSE
 
-ARRAY my.a3 CONTAINS ANY < 2 -- TRUE
-ARRAY my.a3 CONTAINS ALL < 2 -- FALSE
-ARRAY my.a3 CONTAINS ALL <= 2 -- TRUE
+select * from aws_cloudtrail where ARRAY my.a3 CONTAINS ANY < 2 -- TRUE
+select * from aws_cloudtrail where ARRAY my.a3 CONTAINS ALL < 2 -- FALSE
+select * from aws_cloudtrail where ARRAY my.a3 CONTAINS ALL <= 2 -- TRUE
 ```
 
 ### Array sub-query
@@ -295,6 +321,7 @@ This predicate can only be used for a non-terminal fields whose value is of type
 `predicate_expr` subquery supports all predicates expressions except for `doc_predicates`.
 
 Full Syntax:
+
 ```sql
 ARRAY field_expr CONTAINS quantifier ( predicate_expr )
 
@@ -305,17 +332,17 @@ operator: { = | { != | <> } | < | <= | > | => }
 ```sql
 Document: { "arr": [ { "c1": "a", "c2": 1 }, { "c1": "b", "c2": 2 }, { "c1": "a", "c2": 3 } ] }
 
-ARRAY arr CONTAINS ANY ( c1 = 'a' AND c2 = 1 )  -- TRUE
-ARRAY arr CONTAINS ANY ( c1 = 'a' AND c2 = 2 )  -- FALSE
-ARRAY arr CONTAINS ANY ( c1 = 'a' AND c2 IN (1, 3) )  -- TRUE
+select * from aws_cloudtrail where ARRAY arr CONTAINS ANY ( c1 = 'a' AND c2 = 1 )  -- TRUE
+select * from aws_cloudtrail where ARRAY arr CONTAINS ANY ( c1 = 'a' AND c2 = 2 )  -- FALSE
+select * from aws_cloudtrail where ARRAY arr CONTAINS ANY ( c1 = 'a' AND c2 IN (1, 3) )  -- TRUE
 
-ARRAY arr CONTAINS ANY ( c1 = 'b' AND c2 = 2 )  -- TRUE
-ARRAY arr CONTAINS ANY ( c1 = 'b' AND c2 IN (1, 3) )  -- FALSE
-ARRAY arr CONTAINS ANY ( c1 = 'b' AND c2 IN (1, 2, 3) )  -- TRUE
+select * from aws_cloudtrail where ARRAY arr CONTAINS ANY ( c1 = 'b' AND c2 = 2 )  -- TRUE
+select * from aws_cloudtrail where ARRAY arr CONTAINS ANY ( c1 = 'b' AND c2 IN (1, 3) )  -- FALSE
+select * from aws_cloudtrail where ARRAY arr CONTAINS ANY ( c1 = 'b' AND c2 IN (1, 2, 3) )  -- TRUE
 
-ARRAY arr CONTAINS ALL ( c2 <= 3 )  -- TRUE
-ARRAY arr CONTAINS ALL ( c1 = 'a' )  -- FALSE
+select * from aws_cloudtrail where ARRAY arr CONTAINS ALL ( c2 <= 3 )  -- TRUE
+select * from aws_cloudtrail where ARRAY arr CONTAINS ALL ( c1 = 'a' )  -- FALSE
 
-ARRAY arr CONTAINS NONE ( c2 < 1 )  -- TRUE
-ARRAY arr CONTAINS NONE ( c2 = 1 )  -- FALSE
+select * from aws_cloudtrail where ARRAY arr CONTAINS NONE ( c2 < 1 )  -- TRUE
+select * from aws_cloudtrail where ARRAY arr CONTAINS NONE ( c2 = 1 )  -- FALSE
 ```
