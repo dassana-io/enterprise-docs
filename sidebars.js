@@ -42,6 +42,7 @@ const sidebars = {
                     ]
                 },
                 'app-store/tokens',
+                'app-store/default-select-fields',
                 'app-store/limits'
             ]
         },
