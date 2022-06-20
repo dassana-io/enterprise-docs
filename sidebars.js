@@ -42,6 +42,8 @@ const sidebars = {
                     ]
                 },
                 'app-store/tokens',
+                'app-store/default-select-fields',
+                'app-store/normalized-fields',
                 'app-store/limits'
             ]
         },
@@ -53,9 +55,9 @@ const sidebars = {
                 id: 'query/intro'
             },
             items: [
+                'query/SLQ',
                 'query/sample-queries',
                 'query/functions',
-                'query/grammar',
                 'query/limits'
             ]
         },
