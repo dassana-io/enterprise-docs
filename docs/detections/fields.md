@@ -1,0 +1,9 @@
+# Fields
+
+1. **Name**
+1. **Query**
+1. **Frequency** - Interval at which detection query needs to be executed. Value must be in between 5-60 minutes. A frequency of 10 minutes means that the detection is run every 10 minutes over the last 10 minutes of data.
+1. **Rolling Window** - This is an advanced setting of frequency. If enabled the detection is run every 5 minutes over the time range defined in frequency. Say for example, you have a frequency of 30 minutes. By default (rolling window disabled) your detection will run at 12pm, 12:30pm, 1pm, 1:30pm, etc (ie every 30 minutes over the last 30 minutes of data). However, what if you want to run your detection every 5 minutes over the last 30 minutes of data? This where is rolling window comes into play.
+1. **Threshold** - The condition defined here is applied on the query result count (ie the number of rows). The following operators are supported for condition matching: >, <, =, !=. A severity (critical, high, medium, low, info) also needs to be assigned for the threshold condition.
+1. **Throttle** - This setting silences the rule if the rule condition matches within y time. For example, assume that you have a frequency of 5 minutes. This means that Dassana runs your detection every minutes. However, what if you only want 1 notification per 30 minutes even if the detection is triggered multiple times in that 30 minute time span? This is where throttling comes in handy.
+1. **[Tags](./tagging)**

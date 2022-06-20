@@ -77,7 +77,11 @@ const sidebars = {
                 type: 'doc',
                 id: 'detections/intro'
             },
-            items: ['detections/tagging']
+            items: [
+                'detections/fields',
+                'detections/tagging',
+                'detections/limits'
+            ]
         },
         {
             type: 'category',
