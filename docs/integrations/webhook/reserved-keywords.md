@@ -10,17 +10,6 @@ List of reserved keywords can be seen in the webhook integration page next to Re
 
 Reserved Keywords transformation to actual values is shown below with example
 
-
-| Reserved Keyword Name           | Meaning              |
-|---------------------------------|----------------------|
-| [CloudTrail](cloudtrail)        | aws_cloudtrail       |
-| [VPC Flow](vpc-flow)            | aws_vpc_flow         |
-| [ALB Access](alb)               | aws_alb              |
-| [S3 Access](s3-access)          | aws_waf              |
-| [WAF](waf)                      | aws_s3_access        |
-| [Route53 Resolver](r53resolver) | aws_route53_resolver |
-| [Network Firewall](nfw)         | aws_network_firewall |
-
 | Reserved Keyword Name        | Meaning                                                     | Example Value                                                                                                                                                                                                                                                                                                                                                                               |  
 |------------------------------|-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `$DETECTION_RULE_ID`         | Detection Rule Id                                           | *dr-test*                                                                                                                                                                                                                                                                                                                                                                                   |
