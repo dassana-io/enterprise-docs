@@ -35,7 +35,7 @@ Getting started with Webhook Integrations is super easy!
   "webhookName": "$WEBHOOK_NOTIFICATION_NAME"
 }
 ```
-7. Click on `Test` button to make sure the webhook-integration url is valid and meets our url requirements which is explained in () . 
+7. Click on `Test` button to make sure the webhook-integration url is valid and meets our url requirements which is explained in [URL Validation](/integrations/webhook/urlvalidations) . 
 8. Upon Successful validation, `Test` button will be turned to `Save`.
 9. Upon clicking `Save` button , the webhook-integration will be saved.
 
