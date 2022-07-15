@@ -45,7 +45,7 @@ Click on ```use default``` next to Request body label in the integration page. T
 
 :::
 
-::: Want to test webhook integration anytime ?
+:::info Want to test webhook integration anytime ?
 
 1. Head over to the [Integrations](https://console.dassana.cloud/integrations) page
 2. Under respective Webhook Integration, click `Test` .
