@@ -99,7 +99,22 @@ const sidebars = {
                 type: 'doc',
                 id: 'integrations/intro'
             },
-            items: ['integrations/slack']
+            items: [
+                'integrations/slack',
+                {
+                    type: 'category',
+                    label: 'Webhook',
+                    link: {
+                        type: 'doc',
+                        id: 'integrations/webhook/webhook'
+                    },
+                    items: [
+                        'integrations/webhook/reserved-keywords',
+                        'integrations/webhook/url-validation',
+                        'integrations/webhook/last-events-info'
+                    ]
+                }
+            ]
         },
         {
             type: 'category',
