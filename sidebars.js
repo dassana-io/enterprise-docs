@@ -100,20 +100,20 @@ const sidebars = {
                 id: 'integrations/intro'
             },
             items: [
-            'integrations/slack',
-             {
-                                type: 'category',
-                                label: 'Webhook',
-                                link: {
-                                    type: 'doc',
-                                    id: 'integrations/webhook/webhook'
-                                },
-                                items: [
-                                    'integrations/webhook/reserved-keywords',
-                                    'integrations/webhook/urlvalidations',
-                                    'integrations/webhook/lasteventsinfo'
-                                ]
-                            },
+                'integrations/slack',
+                {
+                    type: 'category',
+                    label: 'Webhook',
+                    link: {
+                        type: 'doc',
+                        id: 'integrations/webhook/webhook'
+                    },
+                    items: [
+                        'integrations/webhook/reserved-keywords',
+                        'integrations/webhook/url-validation',
+                        'integrations/webhook/last-events-info'
+                    ]
+                }
             ]
         },
         {
