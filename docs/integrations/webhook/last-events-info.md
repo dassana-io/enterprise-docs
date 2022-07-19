@@ -1,6 +1,6 @@
 # Most Recent Events
 
-If you want to debug your webhook intergration or want to see what was last sent to it, you can do so by:
+If you want to debug your webhook intergration or want to see what was last sent to it:
 
 1. Head over to the [Integrations](https://console.dassana.cloud/integrations) page.
 2. Click on one of your saved webhook integrations.

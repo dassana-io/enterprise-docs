@@ -1,6 +1,6 @@
 # URL Validation
 
-You can use any endpoint url in the webhook integration page which meets following conditions
+You can use any endpoint url in the webhook integration page which meets following conditions:
 
 1. Only `HTTPS` urls are allowed
 2. Urls/IP Addresses cannot be in following CIDR ranges
