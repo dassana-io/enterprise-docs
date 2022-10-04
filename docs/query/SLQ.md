@@ -1,6 +1,6 @@
 # SLQ
 
-**SLQ** (/slick/; **Structured Log Query**) is a SQL like language to query hierarchically structured records (documents). We only support the `SELECT` operation as data insertion is managed by [Sources](../app-store/apps).
+**SLQ** (/slick/; **Structured Log Query**) is a SQL like language to query hierarchically structured records (documents). We only support the `SELECT` operation as data insertion is managed by [Sources](../app-store/intro).
 
 ## Reference
 
