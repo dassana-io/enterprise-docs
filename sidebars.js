@@ -28,7 +28,7 @@ const sidebars = {
                 id: 'visualize/intro'
             },
             items: [
-                'visualize/admin-dashboard',
+                'visualize/exec-dashboard',
                 {
                     type: 'category',
                     label: 'Grafana',
