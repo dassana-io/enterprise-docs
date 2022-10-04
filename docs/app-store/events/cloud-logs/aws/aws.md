@@ -1,4 +1,4 @@
-# AWS
+# AWS Logs
 
 In this guide, we'll learn how to stream all your AWS logs - [CloudTrail](cloudtrail), [VPC Flow](vpc-flow), [ALB](alb), [S3 Access](s3-access), [WAF](waf) - to Dassana.
 
@@ -8,15 +8,15 @@ Your AWS logs must be published to an S3 Bucket.
 
 ## Deploy Serverless App
 
-Dassana has built a Lambda function that streams logs from your S3 bucket to the Cloud Log Lake. You must deploy this serverless app once for each log type (ex. Cloudtrail, VPC Flow logs, etc.)
+Dassana has built a Lambda function that streams logs from your S3 bucket to the security data lake. You must deploy this serverless app once for each log type (ex. Cloudtrail, VPC Flow logs, etc.)
 
 [![](https://dassana-docs-assets.s3.amazonaws.com/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/review?templateURL=https://dassana-native-us-east-1.s3.amazonaws.com/template/packaged-template.yaml)
 
 1. Enter a stack name and and fill out the following Parameters:
 
--   Dassana App ID: Paste the appropriate [App ID](#app-ids)
--   Dassana Endpoint: https://ingestion.dassana.cloud/logs
--   Dassana Token: Paste your [Dassana Token](https://console.dassana.dev/appStore?page=tokens)
+-   Dassana Source ID: Paste the appropriate [Source ID](#source-ids)
+-   Dassana Endpoint: https://ingestion.dassana.cloud/events
+-   Dassana Token: Paste your [Dassana Token](https://console.dassana.cloud/appStore?page=tokens)
 -   ExistingSNSTopic (Optional): If you already have an existing SNS topic receiving notifications from your S3 bucket, paste the ARN here. Otherwise, leave it blank and we'll create one.
 -   LogSourceBucket: Paste the ARN of the S3 bucket containing your logs
 
@@ -25,9 +25,9 @@ Dassana has built a Lambda function that streams logs from your S3 bucket to the
 
 ## Add S3 Event Notification
 
-If you did not have an exisiting SNS topic, follow these steps to finish setting up your Dassana app.
+If you did not have an exisiting SNS topic, follow these steps to finish setting up your Dassana source.
 
-1. Navigate to your S3 bucket in the console and select properties.
+1. Navigate to your S3 bucket in the console and select properties
 2. Scroll down to Event notifications and click create event notifications
 3. Fill out an event name
 4. Select 'All object create events'
@@ -44,15 +44,15 @@ import SlackSupport from '../../../../shared/slack-support.md'
 
 ## Conclusion
 
-Congrats! You've successfully deployed the Dassana AWS app. Now, your AWS logs will be streamed to the Dassana Cloud Log lake and become instantly queryable. View the log references on the sidebar for sample queries to get you started.
+Congrats! You've successfully deployed the Dassana AWS app. Now, your AWS logs will be streamed to the Dassana security data lake and become instantly queryable. View the log references on the sidebar for sample queries to get you started.
 
 ## Handling Failures
 
-The Dassana AWS app includes automatic retries at the execution and invocation levels. However, sometimes retries aren't enough. A common example is when your Dassana token was rotated in the console, but not updated in your lambda configuration. Logs that fail to be delivered after exhausting your configured retry capacity will be sent to a SQS DeadLetterQueue (named YourStackName-DeadLetterQueue). You can send these logs back to Dassana by clicking 'Start DLQ redrive' in the SQS console.
+The Dassana AWS source includes automatic retries at the execution and invocation levels. However, sometimes retries aren't enough. A common example is when your Dassana token was rotated in the console, but not updated in your lambda configuration. Logs that fail to be delivered after exhausting your configured retry capacity will be sent to a SQS DeadLetterQueue (named YourStackName-DeadLetterQueue). You can send these logs back to Dassana by clicking 'Start DLQ redrive' in the SQS console.
 
-## App IDs
+## Source IDs
 
-| Log Type                        | App ID               |
+| Log Type                        | Source ID            |
 | ------------------------------- | -------------------- |
 | [CloudTrail](cloudtrail)        | aws_cloudtrail       |
 | [VPC Flow](vpc-flow)            | aws_vpc_flow         |

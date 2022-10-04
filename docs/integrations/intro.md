@@ -1,3 +1,3 @@
-# 🔌 Integrations
+# 🔌 Destinations
 
-The integrations page is where you can configure outbound notification destinations!
+The destinations page is where you can configure outbound notifications!

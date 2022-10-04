@@ -33,14 +33,3 @@ select count() from all where $ip = 'x.x.x.x'
 ```sql
 select * from [aws_cloudtrail, aws_vpc_flow] where $ip in ('x.x.x.x', 'y.y.y.y')
 ```
-
-## Limitations
-
-Currently normalized fields can only be used in the where clause a statement. Normalized fields cannot be used in:
-
--   select
--   having
--   group by
--   order by
--   functions
--   arrays

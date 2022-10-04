@@ -10,9 +10,9 @@ Currently, it is not possible to configure default select fields. This is someth
 
 :::
 
-For example, in the app store, if you visit the [AWS CloudTrail app](https://console.dassana.cloud/appStore/app/aws_cloudtrail), you will note that there is a tab for `Default Select Fields`.
+For example, under the sources page, if you visit the [AWS CloudTrail source](https://console.dassana.cloud/appStore/app/aws_cloudtrail), you will note that there is a tab for `Default Select Fields`.
 
-![Default Select Fields App Store](/img/app-store/default-select-fields/app-store.png)
+![Default Select Fields Sources](/img/app-store/default-select-fields/app-store.png)
 
 In the case of AWS CloudTrail, all of the fields that we want shown by default are defined on the right-hand side.
 

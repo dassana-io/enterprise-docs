@@ -22,29 +22,25 @@ const sidebars = {
         'intro',
         {
             type: 'category',
-            label: '📱 App Store',
+            label: '📊 Visualize',
             link: {
                 type: 'doc',
-                id: 'app-store/intro'
+                id: 'visualize/intro'
             },
             items: [
+                'visualize/exec-dashboard',
                 {
                     type: 'category',
-                    label: 'Apps',
+                    label: 'Grafana',
                     link: {
                         type: 'doc',
-                        id: 'app-store/apps/apps'
+                        id: 'visualize/grafana/grafana'
                     },
                     items: [
-                        'app-store/apps/cloud-logs/aws/aws',
-                        'app-store/apps/custom',
-                        'app-store/apps/saas-logs/github'
+                        'visualize/grafana/setup',
+                        'visualize/grafana/charting'
                     ]
-                },
-                'app-store/tokens',
-                'app-store/default-select-fields',
-                'app-store/normalized-fields',
-                'app-store/limits'
+                }
             ]
         },
         {
@@ -63,12 +59,39 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: '📊 Visualize',
+            label: '📱 Sources',
             link: {
                 type: 'doc',
-                id: 'visualize/intro'
+                id: 'app-store/intro'
             },
-            items: ['visualize/setup', 'visualize/charting']
+            items: [
+                {
+                    type: 'category',
+                    label: 'Assets',
+                    items: ['app-store/assets/aws']
+                },
+                {
+                    type: 'category',
+                    label: 'Findings',
+                    items: [
+                        'app-store/findings/prisma-cloud',
+                        'app-store/findings/qualys'
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'Events',
+                    items: [
+                        'app-store/events/cloud-logs/aws/aws',
+                        'app-store/events/saas-logs/github',
+                        'app-store/events/custom'
+                    ]
+                },
+                'app-store/tokens',
+                'app-store/default-select-fields',
+                'app-store/normalized-fields',
+                'app-store/limits'
+            ]
         },
         {
             type: 'category',
@@ -94,7 +117,7 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: '🔌 Integrations',
+            label: '🔌 Destinations',
             link: {
                 type: 'doc',
                 id: 'integrations/intro'
@@ -118,12 +141,25 @@ const sidebars = {
         },
         {
             type: 'category',
+            label: '⚠️ Findings',
+            link: {
+                type: 'doc',
+                id: 'findings/intro'
+            },
+            items: ['findings/risk-score', 'findings/limits']
+        },
+        {
+            type: 'category',
             label: '🌎 Org Manager',
             link: {
                 type: 'doc',
                 id: 'org-manager/intro'
             },
-            items: ['org-manager/limits']
+            items: [
+                'org-manager/team-management',
+                'org-manager/asset-attribution',
+                'org-manager/limits'
+            ]
         },
         'billing/intro',
         'support'
