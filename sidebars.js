@@ -22,6 +22,43 @@ const sidebars = {
         'intro',
         {
             type: 'category',
+            label: '📊 Visualize',
+            link: {
+                type: 'doc',
+                id: 'visualize/intro'
+            },
+            items: [
+                'visualize/admin-dashboard',
+                {
+                    type: 'category',
+                    label: 'Grafana',
+                    link: {
+                        type: 'doc',
+                        id: 'visualize/grafana/grafana'
+                    },
+                    items: [
+                        'visualize/grafana/setup',
+                        'visualize/grafana/charting'
+                    ]
+                }
+            ]
+        },
+        {
+            type: 'category',
+            label: '🔎 Query',
+            link: {
+                type: 'doc',
+                id: 'query/intro'
+            },
+            items: [
+                'query/SLQ',
+                'query/sample-queries',
+                'query/functions',
+                'query/limits'
+            ]
+        },
+        {
+            type: 'category',
             label: '📱 Sources',
             link: {
                 type: 'doc',
@@ -54,43 +91,6 @@ const sidebars = {
                 'app-store/default-select-fields',
                 'app-store/normalized-fields',
                 'app-store/limits'
-            ]
-        },
-        {
-            type: 'category',
-            label: '🔎 Query',
-            link: {
-                type: 'doc',
-                id: 'query/intro'
-            },
-            items: [
-                'query/SLQ',
-                'query/sample-queries',
-                'query/functions',
-                'query/limits'
-            ]
-        },
-        {
-            type: 'category',
-            label: '📊 Visualize',
-            link: {
-                type: 'doc',
-                id: 'visualize/intro'
-            },
-            items: [
-                'visualize/admin-dashboard',
-                {
-                    type: 'category',
-                    label: 'Grafana',
-                    link: {
-                        type: 'doc',
-                        id: 'visualize/grafana/grafana'
-                    },
-                    items: [
-                        'visualize/grafana/setup',
-                        'visualize/grafana/charting'
-                    ]
-                }
             ]
         },
         {
