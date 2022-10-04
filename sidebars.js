@@ -146,7 +146,7 @@ const sidebars = {
                 type: 'doc',
                 id: 'findings/intro'
             },
-            items: ['findings/limits']
+            items: ['findings/risk-score', 'findings/limits']
         },
         {
             type: 'category',
