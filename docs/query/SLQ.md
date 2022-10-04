@@ -1,6 +1,6 @@
 # SLQ
 
-**SLQ** (/slick/; **Structured Log Query**) is a SQL like language to query hierarchically structured records (documents). We only support the `SELECT` operation as data insertion is managed by [Apps](../app-store/apps).
+**SLQ** (/slick/; **Structured Log Query**) is a SQL like language to query hierarchically structured records (documents). We only support the `SELECT` operation as data insertion is managed by [Sources](../app-store/apps).
 
 ## Reference
 
@@ -29,13 +29,13 @@ select_query:
     { LIMIT integer }?
 
 schema_expr
-    : app_id
+    : source_id
     | multi_schema_exp
     | ( query ) {AS}? alias
 
 multi_schema_exp
     : { ALL | * }
-    | [ app_id {, app_id}+ ]
+    | [ source_id {, source_id}+ ]
 
 join_expr:
     { {INNER}? JOIN schema_expr | { FULL | LEFT | RIGHT } {OUTER}? JOIN schema_expr } { USING field_expr | ON predicate_expr }
@@ -117,18 +117,18 @@ doc_predicates
 
 ## Schema
 
-Schema is table reference in Dassana. It can either be an actual reference to the App (by app_id) or a virtual reference to an alias.
+Schema is table reference in Dassana. It can either be an actual reference to the source (by source_id) or a virtual reference to an alias.
 
 ### Multi-Schema Support
 
-SLQ unlike regular SQL allows searching multiple schemas as the same time. This is done by either using the `ALL` keyword (shorthand: `*`) reference or by providing an array of `app_id`.
+SLQ unlike regular SQL allows searching multiple schemas as the same time. This is done by either using the `ALL` keyword (shorthand: `*`) reference or by providing an array of `source_id`.
 
 ```sql
 select * from all
 
 select * from *
 
-select * from [ aws_cloudtrail, aws_vpc_flow, _custom_app ]
+select * from [ aws_cloudtrail, aws_vpc_flow, _custom_source ]
 ```
 
 Limitations:
@@ -146,7 +146,7 @@ Note: All elements in an Array must be of same type.
 
 Identifiers are simple alphanumeric strings which are used as for most of the reference names.
 
-`app_id` and `alias` use identifier pattern.
+`source_id` and `alias` use identifier pattern.
 
 Pattern: `[a-zA-Z0-9_]+`
 
@@ -158,7 +158,7 @@ The list of available functions is available [here](./functions).
 
 ### Schema Reference
 
-`$schema` and `$app` are references to the meta-column for the document's schema/app_id. It is useful for multi-schema queries.
+`$schema` and `$source` are references to the meta-column for the document's schema/source_id. It is useful for multi-schema queries.
 
 Examples:
 
@@ -172,7 +172,7 @@ select $schema from [aws_cloudtrail, aws_vpc_flow] where $ip = '1.1.1.1' order b
 
 ### Time Reference
 
-`$time` is a reference to the meta-column for timestamp associated with the document. The value depends on the App configuration and can either be the time the document was received by Dassana or extracted from within the document as per the configuration. It is useful when the document itself doesn't have a timestamp and queries requires an access to the time.
+`$time` is a reference to the meta-column for timestamp associated with the document. The value depends on the source configuration and can either be the time the document was received by Dassana or extracted from within the document as per the configuration. It is useful when the document itself doesn't have a timestamp and queries requires an access to the time.
 
 Examples:
 
@@ -191,7 +191,7 @@ select * from * where $ contains 'search-me'
 ```
 
 ```sql
-select json_query($, '$.path.to.key') from _custom_app
+select json_query($, '$.path.to.key') from _custom_source
 ```
 
 ## Field Reference
@@ -213,7 +213,7 @@ select ct:eventSource from aws_cloudtrail as ct
 References to JSON Objects are not allowed, only terminal primitive type or array is allowed. Also, fields nested withing Array of Objects cannot be selected, but can be predicated upon using [ARRAY predicates](#array-predicates).
 
 ```sql
-select some_array[1] from _custom_app
+select some_array[1] from _custom_source
 ```
 
 :::note
