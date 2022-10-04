@@ -22,7 +22,7 @@ const sidebars = {
         'intro',
         {
             type: 'category',
-            label: '📱 App Store',
+            label: '📱 Sources',
             link: {
                 type: 'doc',
                 id: 'app-store/intro'
@@ -30,15 +30,24 @@ const sidebars = {
             items: [
                 {
                     type: 'category',
-                    label: 'Apps',
-                    link: {
-                        type: 'doc',
-                        id: 'app-store/apps/apps'
-                    },
+                    label: 'Assets',
+                    items: ['app-store/assets/aws']
+                },
+                {
+                    type: 'category',
+                    label: 'Findings',
                     items: [
-                        'app-store/apps/cloud-logs/aws/aws',
-                        'app-store/apps/custom',
-                        'app-store/apps/saas-logs/github'
+                        'app-store/findings/prisma-cloud',
+                        'app-store/findings/qualys'
+                    ]
+                },
+                {
+                    type: 'category',
+                    label: 'Events',
+                    items: [
+                        'app-store/events/cloud-logs/aws/aws',
+                        'app-store/events/saas-logs/github',
+                        'app-store/events/custom'
                     ]
                 },
                 'app-store/tokens',
@@ -68,7 +77,21 @@ const sidebars = {
                 type: 'doc',
                 id: 'visualize/intro'
             },
-            items: ['visualize/setup', 'visualize/charting']
+            items: [
+                'visualize/admin-dashboard',
+                {
+                    type: 'category',
+                    label: 'Grafana',
+                    link: {
+                        type: 'doc',
+                        id: 'visualize/grafana/grafana'
+                    },
+                    items: [
+                        'visualize/grafana/setup',
+                        'visualize/grafana/charting'
+                    ]
+                }
+            ]
         },
         {
             type: 'category',
@@ -94,7 +117,7 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: '🔌 Integrations',
+            label: '🔌 Destinations',
             link: {
                 type: 'doc',
                 id: 'integrations/intro'
@@ -118,12 +141,25 @@ const sidebars = {
         },
         {
             type: 'category',
+            label: '⚠️ Findings',
+            link: {
+                type: 'doc',
+                id: 'findings/intro'
+            },
+            items: ['findings/limits']
+        },
+        {
+            type: 'category',
             label: '🌎 Org Manager',
             link: {
                 type: 'doc',
                 id: 'org-manager/intro'
             },
-            items: ['org-manager/limits']
+            items: [
+                'org-manager/team-management',
+                'org-manager/asset-attribution',
+                'org-manager/limits'
+            ]
         },
         'billing/intro',
         'support'

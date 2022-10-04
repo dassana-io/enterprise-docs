@@ -2,7 +2,7 @@
 
 Getting started with Webhooks is super easy!
 
-1. Head over to the [Integrations](https://console.dassana.cloud/integrations) page.
+1. Head over to the [Destinations](https://console.dassana.cloud/integrations) page.
 2. Under Webhook, click `Add New`.
 
 ![Webhook Integration](/img/integrations/webhook/webhook-empty.png)
@@ -48,7 +48,7 @@ Click on `Use Default` link next to Request body label. This will set your reque
 
 :::info Another way to test your webhook anytime
 
-You can simply click the `Test` button under the Webhooks section of the [Integrations](https://console.dassana.cloud/integrations) page.
+You can simply click the `Test` button under the Webhooks section of the [Destinations](https://console.dassana.cloud/integrations) page.
 
 ![Test Webhook Integration](/img/integrations/webhook/webhook-test.png)
 

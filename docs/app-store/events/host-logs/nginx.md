@@ -29,8 +29,8 @@ We'll now configure Nginx as an input to Fluentd and Dassana as an ouput.
   path /var/log/nginx/access.log # Path to your Nginx logs
   pos_file /var/log/td-agent/nginx-access.log.pos # This file will be created to keep track of the file's inode and position in the file
   tag nginx.access # Can be anything you like, reference this name in the output (discussed below)
-  time_key time # If you choose to change the name of the time_key, you must configure this as a Dassana custom app
-  time_format %Y-%m-%dT%H:%M:%S # If you choose to change the time format, you must configure this as a Dassana custom app
+  time_key time # If you choose to change the name of the time_key, you must configure this as a Dassana custom source
+  time_format %Y-%m-%dT%H:%M:%S # If you choose to change the time format, you must configure this as a Dassana custom source
   <parse>
   @type nginx
   </parse>
@@ -43,7 +43,7 @@ Fluentd will now tail your Nginx log file, parse the relevant fields, and route 
 
 ```html
 <match nginx.access>
-    @type http endpoint https://ingestion.dassana.cloud/logs open_timeout 2
+    @type http endpoint https://ingestion.dassana.cloud/events open_timeout 2
     headers {"x-dassana-app-id":"nginx", "x-dassana-token":"YOUR_TOKEN_HERE"}
     <buffer> flush_interval 10s </buffer>
 </match>
@@ -57,7 +57,7 @@ sudo systemctl restart td-agent
 
 ## Conclusion
 
-Congrats! You've successfully setup Fluentd to forward your Nginx logs to Dassana. Now, your logs will be streamed to the Dassana Cloud Log lake and become instantly queryable. Visit [this page](https://docs.dassana.cloud) next to discover useful queries for Nginx logs.
+Congrats! You've successfully setup Fluentd to forward your Nginx logs to Dassana. Now, your logs will be streamed to the Dassana security data lake and become instantly queryable. Visit [this page](https://docs.dassana.cloud) next to discover useful queries for Nginx logs.
 
 ## Log Example
 

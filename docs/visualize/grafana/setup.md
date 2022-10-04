@@ -51,7 +51,7 @@ password: admin
 2. Find `Dassana`
 3. Use the following settings for the Dassana data source
     - Url: `https://dquery.dassana.cloud`
-    - DassanaToken: This can be found in the [Dassana console](https://console.dassana.cloud) under `App Store` -> `Tokens`
+    - DassanaToken: This can be found in the [Dassana console](https://console.dassana.cloud) under `Sources` -> `Tokens`
 4. Click `Save & test`
 
 ### View Dashboard

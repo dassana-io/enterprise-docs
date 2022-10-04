@@ -12,7 +12,7 @@ While tags are just strings, Dassana uses a specific format of key and value pai
 
 `service:ec2` - Cloud service like ec2, s3, iam, etc.
 
-`app:aws_cloudtrail` - App id from Dassana's [app store](https://console.dassana.cloud/appStore).
+`app:aws_cloudtrail` - Source id from Dassana's [sources page](https://console.dassana.cloud/appStore).
 
 `categorization:iam` - High level categories. Options used by Dassana - cryptography, iam, networking, storage, public, visibility.
 

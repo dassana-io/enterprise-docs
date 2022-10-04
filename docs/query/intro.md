@@ -8,7 +8,7 @@ Once you have some data ingested into Dassana's cloud lake, you can start writin
 select * from aws_cloudtrail
 ```
 
-The schema `aws_cloudtrail` is simply the app id set in the [App Store](../app-store/intro).
+The schema `aws_cloudtrail` is simply the source id set under [Sources](../app-store/intro).
 
 You can learn more about SLQ [here](./SLQ)
 
