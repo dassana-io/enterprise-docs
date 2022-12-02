@@ -8,10 +8,10 @@ Once you have some data ingested into Dassana's security data lake, you can star
 select * from aws_cloudtrail
 ```
 
-The schema `aws_cloudtrail` is simply the source id set under [Sources](../app-store/intro).
+The schema `aws_cloudtrail` is simply the source id set under [Sources](/app-store/intro).
 
-You can learn more about SLQ [here](./SLQ).
+You can learn more about SLQ [here](/query/SLQ).
 
-More sample queries are available [here](./sample-queries).
+More sample queries are available [here](/query/sample-queries).
 
 :::
